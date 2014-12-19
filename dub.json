@@ -1,11 +1,11 @@
 {
-	"name": "vibeirc",
-	"description": "An IRC module for vibe.d",
-	"copyright": "Copyright © 2014, Steven \"Yoplitein\" Dwy",
+    "name": "vibeirc",
+    "description": "An IRC module for vibe.d",
+    "copyright": "Copyright © 2014, Steven \"Yoplitein\" Dwy",
     "license": "BSD 2-Clause",
-	"authors": ["Yoplitein"],
+    "authors": ["Yoplitein"],
     "targetType": "library",
-	"dependencies": {
+    "dependencies": {
         "vibe-d": ">=0.7.21"
-	}
+    }
 }
