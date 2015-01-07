@@ -85,7 +85,7 @@ private class GracelessDisconnect: Exception
 class IRCConnection
 {
     import vibe.core.net: TCPConnection;
-    import vibe.core.log: logDebug, logError, logInfo; //FIXME: logInfo
+    import vibe.core.log: logDebug, logError;
     
     ConnectionParameters connectionParameters; ///The connection parameters passed to $(SYMBOL_LINK irc_connect).
     TCPConnection transport; ///The vibe socket underlying this connection.
@@ -107,7 +107,7 @@ class IRCConnection
         
         string disconnectReason = "Connection terminated gracefully";
         
-        logDebug("irc connected");
+        version(IrcDebugLogging) logDebug("irc connected");
         
         if(connectionParameters.password != null)
             send_line("PASS %s", connectionParameters.password);
@@ -141,7 +141,7 @@ class IRCConnection
         }
         
         disconnected(disconnectReason);
-        logDebug("irc disconnected");
+        version(IrcDebugLogging) logDebug("irc disconnected");
     }
     
     private void line_received(string line)
@@ -170,7 +170,7 @@ class IRCConnection
     
     private void handle_command(string prefix, string command, string[] parts)
     {
-        logDebug("handle_command(%s, %s, %s)", prefix, command, parts);
+        version(IrcDebugLogging) logDebug("handle_command(%s, %s, %s)", prefix, command, parts);
         
         switch(command)
         {
@@ -222,7 +222,7 @@ class IRCConnection
     
     private void handle_numeric(string prefix, int id, string[] parts)
     {
-        logDebug("handle_numeric(%s, %s, %s)", prefix, id, parts);
+        version(IrcDebugLogging) logDebug("handle_numeric(%s, %s, %s)", prefix, id, parts);
         
         switch(id)
         {
