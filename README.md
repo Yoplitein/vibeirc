@@ -19,7 +19,7 @@ class Bot: IRCConnection
     
     override void signed_on()
     {
-        join("#test");
+        join_channel("#test");
     }
     
     override void privmsg(Message message)
