@@ -86,10 +86,12 @@ class IRCConnection
 {
     import vibe.core.net: TCPConnection;
     import vibe.core.log: logDebug, logError;
+    import vibe.core.task: Task;
     
+    private string _nickname;
+    private Task protocolTask;
     ConnectionParameters connectionParameters; ///The connection parameters passed to $(SYMBOL_LINK irc_connect).
     TCPConnection transport; ///The vibe socket underlying this connection.
-    private string _nickname;
     
     /++
         Default constructor. Should not be called from user code.
@@ -266,8 +268,7 @@ class IRCConnection
         import vibe.core.core: runTask;
         
         transport = connectTCP(connectionParameters.hostname, connectionParameters.port);
-        
-        runTask(&protocol_loop);
+        protocolTask = runTask(&protocol_loop);
     }
     
     final void disconnect(string reason)
@@ -275,6 +276,9 @@ class IRCConnection
     body
     {
         send_line("QUIT :%s", reason);
+        
+        if(Task.getThis !is protocolTask)
+            protocolTask.join;
         
         transport.close;
     }
@@ -414,7 +418,7 @@ private User split_userinfo(string info)
     auto matches = info.matchFirst(expression);
     
     if(matches.empty)
-        throw new Exception("Invalid userinfo: " ~ info);
+        return User(info, null, null);
     
     return User(matches[1], matches[2], matches[3]);
 }
