@@ -685,6 +685,11 @@ class IRCConnection
         return _nickname = newNick;
     }
     
+    /++
+        Connect to the IRC network and start the protocol loop.
+        
+        Called from $(SYMBOL_LINK irc_connect), so calling this is only necessary for reconnects.
+    +/
     final void connect()
     in { assert(transport is null ? true : !transport.connected); }
     body
@@ -696,6 +701,9 @@ class IRCConnection
         protocolTask = runTask(&protocol_loop);
     }
     
+    /++
+        Disconnect from the network, giving reason as the quit message.
+    +/
     final void disconnect(string reason)
     in { assert(transport && transport.connected); }
     body
