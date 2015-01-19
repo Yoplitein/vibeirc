@@ -6,6 +6,6 @@
     "authors": ["Yoplitein"],
     "targetType": "library",
     "dependencies": {
-        "vibe-d": ">=0.7.21"
+        "vibe-d": ">=0.7.22"
     }
 }
