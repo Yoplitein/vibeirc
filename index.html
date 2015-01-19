@@ -429,6 +429,26 @@ ditto<br><br>
 <dd>The vibe socket underlying this connection.<br><br>
 
 </dd>
+<dt><big><a name="IRCConnection.sleepTimeout"></a>Duration <u>sleepTimeout</u>;
+</big></dt>
+<dd>How long the protocol loop should sleep after failing to read a line.<br><br>
+
+</dd>
+<dt><big><a name="IRCConnection.buffering"></a>bool <u>buffering</u>;
+</big></dt>
+<dd>Whether to buffer outgoing messages.<br><br>
+
+</dd>
+<dt><big><a name="IRCConnection.bufferLimit"></a>uint <u>bufferLimit</u>;
+</big></dt>
+<dd>Maximum number of messages to send per time period, if buffering is enabled.<br><br>
+
+</dd>
+<dt><big><a name="IRCConnection.bufferTimeout"></a>Duration <u>bufferTimeout</u>;
+</big></dt>
+<dd>Amount of time to wait before sending each batch of messages, if buffering is enabled.<br><br>
+
+</dd>
 <dt><big><a name="IRCConnection.this"></a>protected this();
 </big></dt>
 <dd>Default constructor. Should not be called from user code.
