@@ -743,7 +743,8 @@ class IRCConnection
     +/
     final void send_message(string destination, string message, bool notice = false)
     {
-        send_line("%s %s :%s", notice ? "NOTICE" : "PRIVMSG", destination, message);
+        foreach(line; message.split("\n"))
+            send_line("%s %s :%s", notice ? "NOTICE" : "PRIVMSG", destination, line);
     }
     
     /++
