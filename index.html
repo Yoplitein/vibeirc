@@ -447,6 +447,18 @@ ditto<br><br>
 <dd>Set this connection's nickname.<br><br>
 
 </dd>
+<dt><big><a name="IRCConnection.connect"></a>final void <u>connect</u>();
+</big></dt>
+<dd>Connect to the IRC network and start the protocol loop.
+<br><br>
+Called from <a href="#irc_connect">irc_connect</a>, so calling this is only necessary for reconnects.<br><br>
+
+</dd>
+<dt><big><a name="IRCConnection.disconnect"></a>final void <u>disconnect</u>(string <i>reason</i>);
+</big></dt>
+<dd>Disconnect from the network, giving <i>reason</i> as the quit message.<br><br>
+
+</dd>
 <dt><big><a name="IRCConnection.send_line"></a>final void <u>send_line</u>(Args...)(string <i>contents</i>, Args <i>args</i>);
 </big></dt>
 <dd>Send a formatted line.
