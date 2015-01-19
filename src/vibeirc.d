@@ -25,6 +25,8 @@ module vibeirc;
 private
 {
     import std.string: split, format;
+    
+    import vibe.core.stream: InputStream;
 }
 
 private enum CTCP_ENCAPSULATOR = '\x01';
@@ -509,14 +511,23 @@ private class GracelessDisconnect: Exception
 +/
 class IRCConnection
 {
+    import std.datetime: SysTime, Duration, dur;
+    
     import vibe.core.net: TCPConnection;
-    import vibe.core.log: logDebug, logError;
+    import vibe.core.log: logDebug;
     import vibe.core.task: Task;
     
     private string _nickname;
     private Task protocolTask;
+    private string[] buffer; //Buffered messages
+    private uint bufferSent = 0; //Number of messages sent this time period
+    private SysTime bufferNextTime; //The start of the next time period
     ConnectionParameters connectionParameters; ///The connection parameters passed to $(SYMBOL_LINK irc_connect).
     TCPConnection transport; ///The vibe socket underlying this connection.
+    Duration sleepTimeout = dur!"msecs"(10); ///How long the protocol loop should sleep after failing to read a line.
+    bool buffering = false; ///Whether to buffer outgoing messages.
+    uint bufferLimit = 20; ///Maximum number of messages to send per time period, if buffering is enabled.
+    Duration bufferTimeout = dur!"seconds"(30); ///Amount of time to wait before sending each batch of messages, if buffering is enabled.
     
     /++
         Default constructor. Should not be called from user code.
@@ -524,13 +535,17 @@ class IRCConnection
         See_Also:
             $(SYMBOL_LINK irc_connect)
     +/
-    protected this() {}
+    protected this()
+    {
+        bufferNextTime = SysTime(0L);
+    }
     
     private void protocol_loop()
     in { assert(transport && transport.connected); }
     body
     {
-        import vibe.stream.operations: readLine;
+        import vibe.core.log: logError;
+        import vibe.core.core: sleep;
         
         string disconnectReason = "Connection terminated gracefully";
         
@@ -546,13 +561,23 @@ class IRCConnection
         {
             string line;
             
+            if(buffering)
+                send_messages;
+            
             try
-                line = cast(string)transport.readLine;
+                line = transport.read_line;
             catch(Exception err)
             {
                 logError(err.toString);
                 
                 break;
+            }
+            
+            if(line == null)
+            {
+                sleep(dur!"msecs"(10));
+                
+                continue;
             }
             
             version(IrcDebugLogging) logDebug("irc recv: %s", line);
@@ -666,6 +691,62 @@ class IRCConnection
         }
     }
     
+    private void send_messages()
+    {
+        import std.datetime: Clock;
+        
+        version(IrcDebugLogging) uint currentSend = 0;
+        
+        void update_time()
+        {
+            bufferNextTime = Clock.currTime + bufferTimeout + dur!"seconds"(1); //add a second just to be safe
+        }
+        
+        if(buffer.length == 0)
+            return;
+        
+        if(Clock.currTime > bufferNextTime)
+        {
+            bufferSent = 0;
+            
+            update_time;
+        }
+        
+        if(bufferSent >= bufferLimit)
+            return;
+        
+        version(IrcDebugLogging) logDebug("irc send_messages: about to send, %s so far this period", bufferSent);
+        
+        while(true)
+        {
+            if(buffer.length == 0)
+            {
+                version(IrcDebugLogging) logDebug("irc send_messages: ran out of messages");
+                
+                break;
+            }
+            
+            if(bufferSent >= bufferLimit)
+            {
+                version(IrcDebugLogging) logDebug("irc send_messages: hit buffering limit");
+                
+                break;
+            }
+            
+            string line = buffer[0];
+            buffer = buffer[1 .. $];
+            bufferSent++;
+            version(IrcDebugLogging) currentSend++;
+            
+            version(IrcDebugLogging) logDebug("irc send: %s", line);
+            transport.write(line ~ "\r\n");
+        }
+        
+        update_time;
+        
+        version(IrcDebugLogging) logDebug("irc send_messages: sent %s this loop", currentSend);
+    }
+    
     /++
         Get this connection's _nickname.
     +/
@@ -727,11 +808,15 @@ class IRCConnection
     in { assert(transport && transport.connected); }
     body
     {
-        //TODO: buffering
         contents = contents.format(args);
         
-        version(IrcDebugLogging) logDebug("irc send: %s", contents);
-        transport.write(contents ~ "\r\n");
+        if(buffering)
+            buffer ~= contents;
+        else
+        {
+            version(IrcDebugLogging) logDebug("irc send: %s", contents);
+            transport.write(contents ~ "\r\n");
+        }
     }
     
     /++
@@ -997,4 +1082,44 @@ private auto join(Array)(Array array)
     static import std.string;
     
     return std.string.join(array, " ");
+}
+
+/+
+    Replacement for vibe.stream.operations.readLine that either reads a line immediately,
+    or returns null if a line could not be read.
++/
+private string read_line(InputStream stream, string terminator = "\r\n")
+{
+    import std.algorithm: countUntil;
+    
+    const peekBuffer = stream.peek;
+    
+    if(peekBuffer.length == 0)
+        return null;
+    
+    auto length = peekBuffer.countUntil(cast(ubyte[])terminator);
+    
+    if(length == -1)
+        return null;
+    
+    auto buffer = new ubyte[length];
+    
+    stream.read(buffer);
+    
+    auto line = cast(string)buffer.idup;
+    buffer.length = terminator.length;
+    
+    stream.read(buffer); //clear terminator
+    
+    return line;
+}
+
+unittest
+{
+    import vibe.stream.memory: MemoryStream;
+    
+    auto buffer = new MemoryStream(cast(ubyte[])"abc\r\ndef");
+    
+    assert(buffer.read_line == "abc");
+    assert(buffer.peek == "def");
 }
