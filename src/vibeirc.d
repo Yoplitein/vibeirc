@@ -937,7 +937,7 @@ string color(string text, string foreground, string background = null)
 {
     return ("\x03%s%s%s\x03").format(
         foreground,
-        background is null ? "" : "," ~ background,
+        background == null ? "" : "," ~ background,
         text
     );
 }
@@ -980,7 +980,14 @@ private User split_userinfo(string info)
     auto matches = info.matchFirst(expression);
     
     if(matches.empty)
-        return User(info, null, null);
+    {
+        import std.algorithm: canFind;
+        
+        if(!info.canFind("!") && !info.canFind("@"))
+            return User(info, null, null); //message is from a server
+        else
+            throw new Exception("Failed to parse userinfo");
+    }
     
     return User(matches[1], matches[2], matches[3]);
 }
