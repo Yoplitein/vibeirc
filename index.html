@@ -536,14 +536,23 @@ Called from <a href="#irc_connect">irc_connect</a>, so calling this is only nece
 </table><br>
 
 </dd>
-<dt><big><a name="IRCConnection.signed_on"></a>void <u>signed_on</u>();
+<dt><big><a name="IRCConnection.connected"></a>bool <u>connected</u>();
 </big></dt>
-<dd>Called after succesfully logging in to the network.<br><br>
+<dd>Called after the connection is established, before logging in to the network.
+<br><br>
+<b>Returns:</b><br>
+whether to perform default login procedure
+            (send PASSWORD, NICK and USER commands)<br><br>
 
 </dd>
 <dt><big><a name="IRCConnection.disconnected"></a>void <u>disconnected</u>(string <i>reason</i>);
 </big></dt>
 <dd>Called after being disconnected from the network.<br><br>
+
+</dd>
+<dt><big><a name="IRCConnection.signed_on"></a>void <u>signed_on</u>();
+</big></dt>
+<dd>Called after succesfully logging in to the network.<br><br>
 
 </dd>
 <dt><big><a name="IRCConnection.privmsg"></a>void <u>privmsg</u>(Message <i>message</i>);
