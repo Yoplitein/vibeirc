@@ -551,11 +551,14 @@ class IRCConnection
         
         version(IrcDebugLogging) logDebug("irc connected");
         
-        if(connectionParameters.password != null)
-            send_line("PASS %s", connectionParameters.password);
-        
-        send_line("NICK %s", nickname);
-        send_line("USER %s 0 * :%s", connectionParameters.username, connectionParameters.realname);
+        if(connected)
+        {
+            if(connectionParameters.password != null)
+                send_line("PASS %s", connectionParameters.password);
+            
+            send_line("NICK %s", nickname);
+            send_line("USER %s 0 * :%s", connectionParameters.username, connectionParameters.realname);
+        }
         
         while(transport.connected)
         {
@@ -861,14 +864,26 @@ class IRCConnection
     void unknown_numeric(string prefix, int id, string[] arguments) {}
     
     /++
-        Called after succesfully logging in to the network.
+        Called after the connection is established, before logging in to the network.
+        
+        Returns:
+            whether to perform default login procedure
+            (send PASSWORD, NICK and USER commands)
     +/
-    void signed_on() {}
+    bool connected()
+    {
+        return true;
+    }
     
     /++
         Called after being _disconnected from the network.
     +/
     void disconnected(string reason) {}
+    
+    /++
+        Called after succesfully logging in to the network.
+    +/
+    void signed_on() {}
     
     /++
         Called upon reception of an incoming private message.
