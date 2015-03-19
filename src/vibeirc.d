@@ -1112,36 +1112,30 @@ private auto join(Array)(Array array)
 +/
 private string read_line(InputStream stream, string terminator = "\r\n")
 {
-    import std.algorithm: countUntil;
+    import vibe.stream.operations: readLine;
     
-    const peekBuffer = stream.peek;
+    ubyte[] result = null;
     
-    if(peekBuffer.length == 0)
-        return null;
+    try
+        result = stream.readLine(stream.peek.length, terminator);
+    catch(Exception) {}
     
-    auto length = peekBuffer.countUntil(cast(ubyte[])terminator);
-    
-    if(length == -1)
-        return null;
-    
-    auto buffer = new ubyte[length];
-    
-    stream.read(buffer);
-    
-    auto line = cast(string)buffer.idup;
-    buffer.length = terminator.length;
-    
-    stream.read(buffer); //clear terminator
-    
-    return line;
+    return (cast(char[])result).idup;
 }
 
 unittest
 {
     import vibe.stream.memory: MemoryStream;
     
-    auto buffer = new MemoryStream(cast(ubyte[])"abc\r\ndef");
+    auto buffer = new MemoryStream(cast(ubyte[])"12345678".dup);
     
+    buffer.seek(0);
+    buffer.write(cast(ubyte[])"abc");
+    buffer.seek(0);
+    assert(buffer.read_line == null);
+    buffer.seek(3);
+    buffer.write(cast(ubyte[])"\r\ndef");
+    buffer.seek(0);
     assert(buffer.read_line == "abc");
     assert(buffer.peek == "def");
 }
