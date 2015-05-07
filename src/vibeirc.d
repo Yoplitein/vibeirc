@@ -1096,7 +1096,13 @@ unittest
 
 private Array drop_first(Array)(Array array)
 {
-    return array[1 .. $];
+    import std.array: empty;
+    import std.range: drop;
+    
+    if(array.empty)
+        return array;
+    else
+        return array.drop(1);
 }
 
 private auto join(Array)(Array array)
