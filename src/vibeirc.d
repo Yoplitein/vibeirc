@@ -1114,10 +1114,14 @@ private string read_line(InputStream stream, string terminator = "\r\n")
 {
     import vibe.stream.operations: readLine;
     
-    ubyte[] result = null;
+    ubyte[] result;
+    immutable availableBytes = stream.peek.length;
+    
+    if(availableBytes == 0)
+        return null;
     
     try
-        result = stream.readLine(stream.peek.length, terminator);
+        result = stream.readLine(availableBytes, terminator);
     catch(Exception) {}
     
     return (cast(char[])result).idup;
