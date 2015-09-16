@@ -3,28 +3,29 @@ module vibeirc.constants;
 
 package enum CTCP_ENCAPSULATOR = '\x01';
 
-enum
+/++
+    Color codes for use with $(SYMBOL_LINK color).
++/
+enum Color: string
 {
-    /++
-        Color codes for use with $(SYMBOL_LINK color).
-    +/
-    WHITE = "00",
-    BLACK = "01", ///ditto
-    BLUE = "02", ///ditto
-    GREEN = "03", ///ditto
-    RED = "04", ///ditto
-    BROWN = "05", ///ditto
-    PURPLE = "06", ///ditto
-    ORANGE = "07", ///ditto
-    YELLOW = "08", ///ditto
-    LIGHTGREEN = "09", ///ditto
-    TEAL = "10", ///ditto
-    LIGHTCYAN = "11", ///ditto
-    LIGHTBLUE = "12", ///ditto
-    PINK = "13", ///ditto
-    GREY = "14", ///ditto
-    LIGHTGREY = "15", ///ditto
-    TRANSPARENT = "99", ///ditto
+    none = null, ///Default color
+    white = "00", ///
+    black = "01", ///
+    blue = "02", ///
+    green = "03", ///
+    red = "04", ///
+    brown = "05", ///
+    purple = "06", ///
+    orange = "07", ///
+    yellow = "08", ///
+    lightgreen = "09", ///
+    teal = "10", ///
+    lightcyan = "11", ///
+    lightblue = "12", ///
+    pink = "13", ///
+    grey = "14", ///
+    lightgrey = "15", ///
+    transparent = "99", ///
 }
 
 enum

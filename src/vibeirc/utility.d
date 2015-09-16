@@ -23,19 +23,19 @@ package class GracelessDisconnect: Exception
     
     There are enumerations available for the _color codes $(LINK2 #WHITE, here).
 +/
-string color(string text, string foreground, string background = null)
+string color(string text, Color foreground, Color background = Color.none)
 {
-    return ("\x03%s%s%s\x03").format(
-        foreground,
-        background == null ? "" : "," ~ background,
+    return "\x03%s%s%s\x03".format(
+        cast(string)foreground,
+        background == Color.none ? "" : ("," ~ cast(string)background),
         text
     );
 }
 
 unittest
 {
-    assert("abc".color(RED) == "\x03%sabc\x03".format(RED));
-    assert("abc".color(RED, BLUE) == "\x03%s,%sabc\x03".format(RED, BLUE));
+    assert("abc".color(Color.red) == "\x03%sabc\x03".format(cast(string)Color.red));
+    assert("abc".color(Color.red, Color.blue) == "\x03%s,%sabc\x03".format(cast(string)Color.red, cast(string)Color.blue));
 }
 
 /++
