@@ -1,3 +1,4 @@
+///
 module vibeirc.client;
 
 import vibeirc.constants;

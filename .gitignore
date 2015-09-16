@@ -6,3 +6,4 @@ __dummy.html
 *.a
 dub.selections.json
 __test__library__
+/docs

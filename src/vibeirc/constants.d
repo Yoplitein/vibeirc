@@ -1,3 +1,4 @@
+///
 module vibeirc.constants;
 
 package enum CTCP_ENCAPSULATOR = '\x01';

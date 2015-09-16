@@ -1,3 +1,4 @@
+///
 module vibeirc.utility;
 
 import std.string;
