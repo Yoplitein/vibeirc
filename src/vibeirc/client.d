@@ -22,6 +22,22 @@ private class GracelessDisconnect: Exception
 }
 
 /++
+    Return type for the onConnect callback.
++/
+enum PerformLogin
+{
+    /++
+        Login procedure was not handled in user code, and needs to be done by the library.
+    +/
+    yes,
+    
+    /++
+        Login procedure was handled in user code, and does not need to be done by the library.
+    +/
+    no,
+} 
+
+/++
     Represents a connection to an IRC server.
 +/
 final class IRCClient
@@ -231,14 +247,14 @@ final class IRCClient
         return _onUnknownNumeric = newValue;
     }
     
-    private bool delegate() _onConnect;
+    private PerformLogin delegate() _onConnect;
     
     /++
         Called after the connection is established, before logging in to the network.
         
         Returns:
-            whether to perform default login procedure
-            (send PASSWORD, NICK and USER commands)
+            whether login procedure (sending of PASSWORD, NICK and USER commands)
+            was handled in the callback
     +/
     @property typeof(_onConnect) onConnect()
     {
@@ -466,7 +482,7 @@ final class IRCClient
         
         version(IrcDebugLogging) logDebug("irc connected");
         
-        if(runCallback(onConnect)) //TODO: flip meaning of return type
+        if(runCallback(onConnect) == PerformLogin.yes)
         {
             if(password != null)
                 sendLine("PASS %s", password);
