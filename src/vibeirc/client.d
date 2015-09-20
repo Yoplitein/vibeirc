@@ -735,13 +735,12 @@ final class IRCClient
             password = password to use when logging in to the network (optional)
     +/
     void connect(string host, ushort port, string password = null)
-    in { assert(transport is null ? true : !transport.connected); }
-    body
     {
         import vibe.core.net: connectTCP;
         import vibe.core.core: runTask;
         
-        //TODO: check if already connected
+        if(connected)
+            throw new Exception("Already connected!");
         
         transport = connectTCP(host, port);
         protocolTask = runTask(
