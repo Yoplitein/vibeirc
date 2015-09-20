@@ -1,24 +1,21 @@
 ///
 module vibeirc.client;
 
+import std.datetime;
+
+import vibe.core.log;
+import vibe.core.net;
+import vibe.core.task;
+
 import vibeirc.constants;
 import vibeirc.data;
 import vibeirc.utility;
 
 /++
-    The base class for IRC connections.
+    Represents a connection to an IRC server.
 +/
-class IRCConnection
+final class IRCClient
 {
-    import std.datetime: SysTime, Duration, dur;
-    
-    import vibe.core.net: TCPConnection;
-    import vibe.core.log: logDebug;
-    import vibe.core.task: Task;
-    
-    private string _nickname;
-    private string _username; //Username in WHOIS info
-    private string _realname; //Real name in WHOIS info
     private Task protocolTask;
     private string[] buffer; //Buffered messages
     private uint bufferSent = 0; //Number of messages sent this time period
@@ -37,7 +34,66 @@ class IRCConnection
         bufferNextTime = SysTime(0L);
     }
     
-    private void protocolLoop(string host, ushort port, string password)
+    private string _nickname;
+    
+    /++
+        The display name this client will use.
+    +/
+    @property string nickname()
+    {
+        return _nickname;
+    }
+    
+    /++
+        ditto
+    +/
+    @property string nickname(string newNick)
+    {
+        if(transport && transport.connected)
+            sendLine("NICK %s", newNick);
+        
+        return _nickname = newNick;
+    }
+    
+    private string _username;
+    
+    /++
+        The username shown by the WHOIS command.
+    +/
+    
+    @property string username()
+    {
+        return _username;
+    }
+    
+    /++
+        ditto
+    +/
+    @property string username(string newValue)
+    {
+        return _username = newValue;
+    }
+    
+    private string _realname;
+    
+    /++
+        The real name shown by the WHOIS command.
+    +/
+    
+    @property string realname()
+    {
+        return _realname;
+    }
+    
+    /++
+        ditto
+    +/
+    @property string realname(string newValue)
+    {
+        return _realname = newValue;
+    }
+    
+    private void protocolLoop(string password)
     in { assert(transport && transport.connected); }
     body
     {
@@ -50,11 +106,11 @@ class IRCConnection
         
         if(connected)
         {
-            if(connectionParameters.password != null)
-                sendLine("PASS %s", connectionParameters.password);
+            if(password != null)
+                sendLine("PASS %s", password);
             
             sendLine("NICK %s", nickname);
-            sendLine("USER %s 0 * :%s", connectionParameters.username, connectionParameters.realname);
+            sendLine("USER %s 0 * :%s", username, realname);
         }
         
         while(transport.connected)
@@ -249,25 +305,6 @@ class IRCConnection
     }
     
     /++
-        Get this connection's _nickname.
-    +/
-    final @property string nickname()
-    {
-        return _nickname;
-    }
-    
-    /++
-        Set this connection's _nickname.
-    +/
-    final @property string nickname(string newNick)
-    {
-        if(transport && transport.connected)
-            sendLine("NICK %s", newNick);
-        
-        return _nickname = newNick;
-    }
-    
-    /++
         Connect to the IRC network and start the protocol loop.
         
         Params:
@@ -275,7 +312,7 @@ class IRCConnection
             port = port to connect on
             password = password to use when logging in to the network (optional)
     +/
-    final void connect(string host, ushort port, string password = null)
+    void connect(string host, ushort port, string password = null)
     in { assert(transport is null ? true : !transport.connected); }
     body
     {
@@ -284,14 +321,14 @@ class IRCConnection
         
         //TODO: check if already connected
         
-        transport = connectTCP(connectionParameters.hostname, connectionParameters.port);
-        protocolTask = runTask({ protocolLoop(host, port, password); });
+        transport = connectTCP(host, port);
+        protocolTask = runTask(&protocolLoop, password);
     }
     
     /++
         Disconnect from the network, giving reason as the quit message.
     +/
-    final void quit(string reason)
+    void quit(string reason)
     in { assert(transport && transport.connected); }
     body
     {
@@ -310,7 +347,7 @@ class IRCConnection
             contents = format string for the line
             args = formatting arguments
     +/
-    final void sendLine(Args...)(string contents, Args args)
+    void sendLine(Args...)(string contents, Args args)
     in { assert(transport && transport.connected); }
     body
     {
@@ -335,7 +372,7 @@ class IRCConnection
             message = the body of the _message
             notice = send a NOTICE instead of a PRIVMSG
     +/
-    final void send(string destination, string message, bool notice = false)
+    void send(string destination, string message, bool notice = false)
     {
         import std.string: split;
         
@@ -346,7 +383,7 @@ class IRCConnection
     /++
         Join a channel.
     +/
-    final void join(string name)
+    void join(string name)
     {
         sendLine("JOIN %s", name);
     }
