@@ -75,7 +75,7 @@ final class IRCClient
     +/
     @property string nickname(string newNick)
     {
-        if(transport && transport.connected)
+        if(connected)
             sendLine("NICK %s", newNick);
         
         return _nickname = newNick;
@@ -193,6 +193,14 @@ final class IRCClient
     @property Duration bufferTimeout(Duration newValue)
     {
         return _bufferTimeout = newValue;
+    }
+    
+    /++
+        Returns whether this connection is active.
+    +/
+    @property bool connected()
+    {
+        return transport && transport.connected;
     }
     
     /*======================================*
@@ -472,7 +480,7 @@ final class IRCClient
      *======================================*/
     
     private void protocolLoop(string password)
-    in { assert(transport && transport.connected); }
+    in { assert(connected); }
     body
     {
         import vibe.core.log: logError;
@@ -509,7 +517,7 @@ final class IRCClient
             
             if(line == null)
             {
-                if(!transport.connected) //reading final lines
+                if(!connected) //reading final lines
                     break;
                 
                 sleep(sleepTimeout);
@@ -525,7 +533,7 @@ final class IRCClient
             {
                 disconnectReason = err.msg;
                 
-                if(transport.connected)
+                if(connected)
                     transport.close;
             }
         }
@@ -748,7 +756,7 @@ final class IRCClient
         Disconnect from the network, giving reason as the quit message.
     +/
     void quit(string reason)
-    in { assert(transport && transport.connected); }
+    in { assert(connected); }
     body
     {
         sendLine("QUIT :%s", reason);
@@ -767,7 +775,7 @@ final class IRCClient
             args = formatting arguments
     +/
     void sendLine(Args...)(string contents, Args args)
-    in { assert(transport && transport.connected); }
+    in { assert(connected); }
     body
     {
         import std.string: format;
