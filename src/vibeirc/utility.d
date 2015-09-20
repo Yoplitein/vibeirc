@@ -21,7 +21,7 @@ package class GracelessDisconnect: Exception
     Format text to appear colored according to foreground, and optional background coloring,
     to IRC clients that support it.
     
-    There are enumerations available for the _color codes $(LINK2 #WHITE, here).
+    There are enumerations available for the _color codes $(LINK2 ../constants/color.html, here).
 +/
 string color(string text, Color foreground, Color background = Color.none)
 {

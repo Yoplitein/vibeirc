@@ -21,7 +21,7 @@ class IRCConnection
     private string[] buffer; //Buffered messages
     private uint bufferSent = 0; //Number of messages sent this time period
     private SysTime bufferNextTime; //The start of the next time period
-    ConnectionParameters connectionParameters; ///The connection parameters passed to $(SYMBOL_LINK ircConnect).
+    ConnectionParameters connectionParameters; ///The connection parameters passed to ircConnect.
     TCPConnection transport; ///The vibe socket underlying this connection.
     Duration sleepTimeout = dur!"msecs"(10); ///How long the protocol loop should sleep after failing to read a line.
     bool buffering = false; ///Whether to buffer outgoing messages.
@@ -32,7 +32,7 @@ class IRCConnection
         Default constructor. Should not be called from user code.
         
         See_Also:
-            $(SYMBOL_LINK ircConnect)
+            ircConnect
     +/
     protected this()
     {
@@ -272,7 +272,7 @@ class IRCConnection
     /++
         Connect to the IRC network and start the protocol loop.
         
-        Called from $(SYMBOL_LINK ircConnect), so calling this is only necessary for reconnects.
+        Called from ircConnect, so calling this is only necessary for reconnects.
     +/
     final void connect()
     in { assert(transport is null ? true : !transport.connected); }
@@ -301,7 +301,7 @@ class IRCConnection
     }
     
     /++
-        Send a formatted line.
+        Send a raw IRC command.
         
         Params:
             contents = format string for the line
@@ -329,6 +329,7 @@ class IRCConnection
         
         Params:
             destination = _destination of the message, either a #channel or a nickname
+            message = the body of the _message
             notice = send a NOTICE instead of a PRIVMSG
     +/
     final void send(string destination, string message, bool notice = false)
@@ -390,7 +391,9 @@ class IRCConnection
     void signedOn() {}
     
     /++
-        Called upon reception of an incoming private message.
+        Called upon reception of an incoming message.
+        
+        Despite the name, it may have been sent either directly or to a channel.
     +/
     void privmsg(Message message) {}
     

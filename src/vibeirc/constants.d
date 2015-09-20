@@ -4,7 +4,7 @@ module vibeirc.constants;
 package enum CTCP_ENCAPSULATOR = '\x01';
 
 /++
-    Color codes for use with $(SYMBOL_LINK color).
+    Color codes for use with $(LINK2 ../utility/color.html, color).
 +/
 enum Color: string
 {
