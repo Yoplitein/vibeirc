@@ -38,6 +38,12 @@ final class IRCClient
         bufferNextTime = SysTime(0L);
     }
     
+    /*======================================*
+     *======================================*
+     *              Properties              *
+     *======================================*
+     *======================================*/
+    
     private string _nickname;
     
     /++
@@ -172,6 +178,12 @@ final class IRCClient
     {
         return _bufferTimeout = newValue;
     }
+    
+    /*======================================*
+     *======================================*
+     *              Callbacks               *
+     *======================================*
+     *======================================*/
     
     private void delegate(string prefix, string command, string[] arguments) _onUnknownCommand;
     
@@ -437,6 +449,12 @@ final class IRCClient
         return _onUserRename = newValue;
     }
     
+    /*======================================*
+     *======================================*
+     *           Private Methods            *
+     *======================================*
+     *======================================*/
+    
     private void protocolLoop(string password)
     in { assert(transport && transport.connected); }
     body
@@ -671,6 +689,12 @@ final class IRCClient
                 return returnType.init;
         }
     }
+    
+    /*======================================*
+     *======================================*
+     *            Public Methods            *
+     *======================================*
+     *======================================*/
     
     /++
         Connect to the IRC network and start the protocol loop.
