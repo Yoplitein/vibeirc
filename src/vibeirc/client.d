@@ -181,13 +181,13 @@ class IRCConnection
         
         switch(id)
         {
-            case RPL_WELCOME:
+            case Numeric.RPL_WELCOME:
                 signed_on;
                 
                 break;
-            case ERR_ERRONEUSNICKNAME:
+            case Numeric.ERR_ERRONEUSNICKNAME:
                 throw new GracelessDisconnect("Erroneus nickname"); //TODO: handle gracefully?
-            case ERR_NICKNAMEINUSE:
+            case Numeric.ERR_NICKNAMEINUSE:
                 throw new GracelessDisconnect("Nickname already in use"); //TODO: handle gracefully?
             default:
                 unknown_numeric(prefix, id, parts);
