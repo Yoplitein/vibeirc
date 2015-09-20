@@ -4,50 +4,44 @@ An IRC module for vibe.d
 ##Documentation
 The code is documented via ddoc comments. There is also online documentation available [here](http://yoplitein.github.io/vibeirc/).
 
-##A simple example
+##Examples
+###Simple
 ```D
 import std.stdio;
 
 import vibeirc;
 
-class Bot: IRCConnection
+shared static this()
 {
-    this()
-    {
-        nickname = "vibeirc";
-    }
+    auto bot = new IRCClient;
     
-    override void signed_on()
+    void onLogin()
     {
-        join_channel("#test");
+        bot.join("#test");
     }
-    
-    override void privmsg(Message message)
+
+    void onMessage(Message message)
     {
-        if(message.receiver == nickname || message.isCTCP)
+        if(message.target == bot.nickname || message.isCTCP)
             return;
         
         writefln(
             "[%s] <%s> %s",
-            message.receiver,
+            message.target,
             message.sender.nickname,
             message.message
         );
     }
-}
-
-Bot bot;
-
-static this()
-{
-    bot = irc_connect!Bot(
-        ConnectionParameters(
-            "localhost",
-            6667
-        )
-    );
+    
+    bot.onLogin = &onLogin;
+    bot.onMessage = &onMessage;
+    
+    bot.connect("irc.example.net", 6667);
 }
 ```
+
+###More complete example
+See [example/](blob/master/example/src/app.d)
 
 ##License
 vibeirc is available under the terms of the BSD 2-clause license. See [LICENSE](LICENSE) for details.
