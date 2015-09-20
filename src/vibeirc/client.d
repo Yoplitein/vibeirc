@@ -81,7 +81,7 @@ final class IRCClient
         return _nickname = newNick;
     }
     
-    private string _username;
+    private string _username = "vibeirc";
     
     /++
         The username shown by the WHOIS command.
@@ -99,7 +99,7 @@ final class IRCClient
         return _username = newValue;
     }
     
-    private string _realname;
+    private string _realname = "vibeirc";
     
     /++
         The real name shown by the WHOIS command.
