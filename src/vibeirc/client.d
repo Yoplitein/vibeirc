@@ -16,17 +16,11 @@ import vibeirc.utility;
 +/
 final class IRCClient
 {
-    private Task protocolTask;
+    private Task protocolTask; //The task running protocolLoop
+    private TCPConnection transport; //The TCP socket
     private string[] buffer; //Buffered messages
     private uint bufferSent = 0; //Number of messages sent this time period
     private SysTime bufferNextTime; //The start of the next time period
-    private TCPConnection transport;
-    
-    //TODO: getters/setters
-    Duration sleepTimeout = dur!"msecs"(10); ///How long the protocol loop should sleep after failing to read a line.
-    bool buffering = false; ///Whether to buffer outgoing messages.
-    uint bufferLimit = 20; ///Maximum number of messages to send per time period, if buffering is enabled.
-    Duration bufferTimeout = dur!"seconds"(30); ///Amount of time to wait before sending each batch of messages, if buffering is enabled.
     
     ///
     this()
@@ -60,7 +54,6 @@ final class IRCClient
     /++
         The username shown by the WHOIS command.
     +/
-    
     @property string username()
     {
         return _username;
@@ -79,7 +72,6 @@ final class IRCClient
     /++
         The real name shown by the WHOIS command.
     +/
-    
     @property string realname()
     {
         return _realname;
@@ -91,6 +83,84 @@ final class IRCClient
     @property string realname(string newValue)
     {
         return _realname = newValue;
+    }
+    
+    private Duration _sleepTimeout = dur!"msecs"(10);
+    
+    /++
+        How long the protocol loop should sleep after failing to read a line.
+        
+        Defaults to 10 ms.
+    +/
+    @property Duration sleepTimeout()
+    {
+        return _sleepTimeout;
+    }
+    
+    /++
+        ditto
+    +/
+    @property Duration sleepTimeout(Duration newValue)
+    {
+        return _sleepTimeout = newValue;
+    }
+    
+    private bool _buffering = false;
+    
+    /++
+        Whether to buffer outgoing messages.
+        
+        Defaults to off (false).
+    +/
+    @property bool buffering()
+    {
+        return _buffering;
+    }
+    
+    /++
+        ditto
+    +/
+    @property bool buffering(bool newValue)
+    {
+        return _buffering = newValue;
+    }
+    
+    private uint _bufferLimit = 20;
+    
+    /++
+        Maximum number of messages to send per time period, if buffering is enabled.
+        
+        Defaults to 20.
+    +/
+    @property uint bufferLimit()
+    {
+        return _bufferLimit;
+    }
+    
+    /++
+        ditto
+    +/
+    @property uint bufferLimit(uint newValue)
+    {
+        return _bufferLimit = newValue;
+    }
+    
+    private Duration _bufferTimeout = dur!"seconds"(30);
+    
+    /++
+        Amount of time to wait before sending each batch of messages, if buffering is enabled.
+    +/
+    @property Duration bufferTimeout()
+    {
+        return _bufferTimeout;
+    }
+    
+    /++
+        ditto
+    +/
+    @property Duration bufferTimeout(Duration newValue)
+    {
+        return _bufferTimeout = newValue;
     }
     
     private void protocolLoop(string password)
