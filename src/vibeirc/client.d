@@ -564,10 +564,10 @@ final class IRCClient
             case "NOTICE":
             case "PRIVMSG":
                 Message msg;
-                string message = parts.dropFirst.join;
+                string message = parts.dropFirst.join.dropFirst;
                 msg.sender = prefix.splitUserinfo;
                 msg.target = parts[0];
-                msg.message = message != null ? message.dropFirst : "";
+                msg.message = message;
                 
                 if(message.isCTCP)
                 {
