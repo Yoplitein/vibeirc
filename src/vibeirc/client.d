@@ -12,6 +12,15 @@ import vibeirc.constants;
 import vibeirc.data;
 import vibeirc.utility;
 
+//Thrown from lineReceived, handleNumeric or handleCommand in case of an error
+private class GracelessDisconnect: Exception
+{
+    this(string msg)
+    {
+        super(msg);
+    }
+}
+
 /++
     Represents a connection to an IRC server.
 +/
@@ -589,7 +598,7 @@ final class IRCClient
         
         version(IrcDebugLogging) uint currentSend = 0;
         
-        void update_time()
+        void updateTime()
         {
             bufferNextTime = Clock.currTime + bufferTimeout + dur!"seconds"(1); //add a second just to be safe
         }
@@ -601,7 +610,7 @@ final class IRCClient
         {
             bufferSent = 0;
             
-            update_time;
+            updateTime;
         }
         
         if(bufferSent >= bufferLimit)
@@ -634,7 +643,7 @@ final class IRCClient
             transport.write(line ~ "\r\n");
         }
         
-        update_time;
+        updateTime;
         
         version(IrcDebugLogging) logDebug("irc flushMessageBuffer: sent %s this loop", currentSend);
     }

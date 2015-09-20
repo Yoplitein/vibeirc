@@ -8,15 +8,6 @@ import vibe.core.stream;
 import vibeirc.constants;
 import vibeirc.data;
 
-//Thrown from line_received, handle_numeric or handle_command in case of an error
-package class GracelessDisconnect: Exception
-{
-    this(string msg)
-    {
-        super(msg);
-    }
-}
-
 /++
     Format text to appear colored according to foreground, and optional background coloring,
     to IRC clients that support it.
