@@ -170,9 +170,9 @@ final class IRCClient
         Called when an unknown command is received.
         
         Params:
-            prefix = origin of the _command, either a server or a user
-            command = the name of the _command
-            arguments = the body of the _command
+            a = origin of the command, either a server or a user
+            b = the name of the command
+            c = the body of the command
     +/
     @property typeof(_onUnknownCommand) onUnknownCommand()
     {
@@ -193,9 +193,9 @@ final class IRCClient
         Called when an unknown numeric command is received.
         
         Params:
-            prefix = origin of the command, either a server or a user
-            id = the number of the command
-            arguments = the body of the command
+            a = origin of the command, either a server or a user
+            b = the number of the command
+            c = the body of the command
     +/
     @property typeof(_onUnknownNumeric) onUnknownNumeric()
     {
@@ -235,7 +235,10 @@ final class IRCClient
     private void delegate(string reason) _onDisconnect;
     
     /++
-        Called after being _disconnected from the network.
+        Called after being disconnected from the network.
+        
+        Params:
+            a = the reason for quitting
     +/
     @property typeof(_onDisconnect) onDisconnect()
     {
@@ -273,7 +276,8 @@ final class IRCClient
     /++
         Called upon reception of an incoming message.
         
-        Despite the name, it may have been sent either directly or to a channel.
+        Params:
+            a = information on the incoming message
     +/
     @property typeof(_onMessage) onMessage()
     {
@@ -291,9 +295,12 @@ final class IRCClient
     private void delegate(Message message) _onNotice;
     
     /++
-        Called upon reception of an incoming _notice.
+        Called upon reception of an incoming notice.
         
-        A _notice is similar to a privmsg, except it is expected to not generate automatic replies.
+        A notice is similar to a privmsg, except it is expected to not generate automatic replies.
+        
+        Params:
+            a = information on the incoming message
     +/
     @property typeof(_onNotice) onNotice()
     {
@@ -311,7 +318,11 @@ final class IRCClient
     private void delegate(User user, string channel) _onUserJoin;
     
     /++
-        Called when a _user joins a _channel.
+        Called when a user joins a channel.
+        
+        Params:
+            a = the user that joined
+            b = the channel they joined
     +/
     @property typeof(_onUserJoin) onUserJoin()
     {
@@ -329,7 +340,12 @@ final class IRCClient
     private void delegate(User user, string channel, string reason) _onUserPart;
     
     /++
-        Called when a _user leaves a _channel.
+        Called when a user leaves a channel.
+        
+        Params:
+            a = the user that left
+            b = the channel they left
+            c = the reason they left, if any
     +/
     @property typeof(_onUserPart) onUserPart()
     {
@@ -347,7 +363,11 @@ final class IRCClient
     private void delegate(User user, string reason) _onUserQuit;
     
     /++
-        Called when a _user disconnects from the network.
+        Called when a user disconnects from the network.
+        
+        Params:
+            a = the user that quit
+            b = the reason they quit, if any
     +/
     @property typeof(_onUserQuit) onUserQuit()
     {
@@ -365,11 +385,13 @@ final class IRCClient
     private void delegate(User kicker, string user, string channel, string reason) _onUserKick;
     
     /++
-        Called when a _user is kicked from a _channel.
+        Called when a user is kicked from a channel.
         
         Params:
-            kicker = the _user that performed the kick
-            user = the _user that was kicked
+            a = the user that performed the kick
+            b = the user that was kicked
+            c = the channel they were kicked from
+            d = the reason they were kicked
     +/
     @property typeof(_onUserKick) onUserKick()
     {
@@ -387,7 +409,11 @@ final class IRCClient
     private void delegate(User user, string oldNick) _onUserRename;
     
     /++
-        Called when a _user changes their nickname.
+        Called when a user changes their nickname.
+        
+        Params:
+            a = the user that changed their name
+            b = the user's old name
     +/
     @property typeof(_onUserRename) onUserRename()
     {
@@ -698,11 +724,11 @@ final class IRCClient
     }
     
     /++
-        Send a _message.
+        Send a message.
         
         Params:
-            destination = _destination of the message, either a #channel or a nickname
-            message = the body of the _message
+            destination = destination of the message, either a #channel or a nickname
+            message = the body of the message
             notice = send a NOTICE instead of a PRIVMSG
     +/
     void send(string destination, string message, bool notice = false)
