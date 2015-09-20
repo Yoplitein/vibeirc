@@ -443,14 +443,14 @@ final class IRCClient
         return _onUserKick = newValue;
     }
     
-    private void delegate(User user, string oldNick) _onUserRename;
+    private void delegate(User user, string newNick) _onUserRename;
     
     /++
         Called when a user changes their nickname.
         
         Params:
             a = the user that changed their name
-            b = the user's old name
+            b = the user's new name
     +/
     @property typeof(_onUserRename) onUserRename()
     {
