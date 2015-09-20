@@ -1,0 +1,7 @@
+{
+    "name": "vibeirc-example",
+    "versions": ["VibeDefaultMain", "IrcDebugLogging"],
+    "dependencies": {
+        "vibeirc": {"path": ".."}
+    }
+}

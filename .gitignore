@@ -6,6 +6,7 @@ __dummy.html
 *.a
 *.dll
 *.lib
+*.exe
 dub.selections.json
 __test__library__
 /docs
