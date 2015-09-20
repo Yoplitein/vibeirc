@@ -21,7 +21,7 @@ class IRCConnection
     private string[] buffer; //Buffered messages
     private uint bufferSent = 0; //Number of messages sent this time period
     private SysTime bufferNextTime; //The start of the next time period
-    ConnectionParameters connectionParameters; ///The connection parameters passed to $(SYMBOL_LINK irc_connect).
+    ConnectionParameters connectionParameters; ///The connection parameters passed to $(SYMBOL_LINK ircConnect).
     TCPConnection transport; ///The vibe socket underlying this connection.
     Duration sleepTimeout = dur!"msecs"(10); ///How long the protocol loop should sleep after failing to read a line.
     bool buffering = false; ///Whether to buffer outgoing messages.
@@ -32,14 +32,14 @@ class IRCConnection
         Default constructor. Should not be called from user code.
         
         See_Also:
-            $(SYMBOL_LINK irc_connect)
+            $(SYMBOL_LINK ircConnect)
     +/
     protected this()
     {
         bufferNextTime = SysTime(0L);
     }
     
-    private void protocol_loop()
+    private void protocolLoop()
     in { assert(transport && transport.connected); }
     body
     {
@@ -53,10 +53,10 @@ class IRCConnection
         if(connected)
         {
             if(connectionParameters.password != null)
-                send_line("PASS %s", connectionParameters.password);
+                sendLine("PASS %s", connectionParameters.password);
             
-            send_line("NICK %s", nickname);
-            send_line("USER %s 0 * :%s", connectionParameters.username, connectionParameters.realname);
+            sendLine("NICK %s", nickname);
+            sendLine("USER %s 0 * :%s", connectionParameters.username, connectionParameters.realname);
         }
         
         while(transport.connected)
@@ -64,10 +64,10 @@ class IRCConnection
             string line;
             
             if(buffering)
-                send_messages;
+                flushMessageBuffer;
             
             try
-                line = transport.read_line;
+                line = transport.tryReadLine;
             catch(Exception err)
             {
                 logError(err.toString);
@@ -85,7 +85,7 @@ class IRCConnection
             version(IrcDebugLogging) logDebug("irc recv: %s", line);
             
             try
-                line_received(line);
+                lineReceived(line);
             catch(GracelessDisconnect err)
             {
                 disconnectReason = err.msg;
@@ -98,7 +98,7 @@ class IRCConnection
         version(IrcDebugLogging) logDebug("irc disconnected");
     }
     
-    private void line_received(string line)
+    private void lineReceived(string line)
     {
         import std.conv: ConvException, to;
         import std.string: split;
@@ -108,38 +108,38 @@ class IRCConnection
         switch(parts[0])
         {
             case "PING":
-                send_line("PONG %s", parts[1]);
+                sendLine("PONG %s", parts[1]);
                 
                 break;
             case "ERROR":
-                throw new GracelessDisconnect(parts.drop_first.join.drop_first);
+                throw new GracelessDisconnect(parts.dropFirst.join.dropFirst);
             default:
-                parts[0] = parts[0].drop_first;
+                parts[0] = parts[0].dropFirst;
                 
                 try
-                    handle_numeric(parts[0], parts[1].to!int, parts[2 .. $]);
+                    handleNumeric(parts[0], parts[1].to!int, parts[2 .. $]);
                 catch(ConvException err)
-                    handle_command(parts[0], parts[1], parts[2 .. $]);
+                    handleCommand(parts[0], parts[1], parts[2 .. $]);
         }
     }
     
-    private void handle_command(string prefix, string command, string[] parts)
+    private void handleCommand(string prefix, string command, string[] parts)
     {
-        version(IrcDebugLogging) logDebug("handle_command(%s, %s, %s)", prefix, command, parts);
+        version(IrcDebugLogging) logDebug("handleCommand(%s, %s, %s)", prefix, command, parts);
         
         switch(command)
         {
             case "NOTICE":
             case "PRIVMSG":
                 Message msg;
-                string message = parts.drop_first.join;
-                msg.sender = prefix.split_userinfo;
+                string message = parts.dropFirst.join;
+                msg.sender = prefix.splitUserinfo;
                 msg.receiver = parts[0];
-                msg.message = message != null ? message.drop_first : "";
+                msg.message = message != null ? message.dropFirst : "";
                 
-                if(message.is_ctcp)
+                if(message.isCTCP)
                 {
-                    auto parsedCtcp = message.parse_ctcp;
+                    auto parsedCtcp = message.parseCTCP;
                     msg.ctcpCommand = parsedCtcp.command;
                     msg.message = parsedCtcp.message;
                 }
@@ -151,38 +151,38 @@ class IRCConnection
                 
                 break;
             case "JOIN":
-                user_joined(prefix.split_userinfo, parts[0].drop_first);
+                userJoined(prefix.splitUserinfo, parts[0].dropFirst);
                 
                 break;
             case "PART":
-                user_left(prefix.split_userinfo, parts[0], parts.drop_first.join.drop_first);
+                userLeft(prefix.splitUserinfo, parts[0], parts.dropFirst.join.dropFirst);
                 
                 break;
             case "QUIT":
-                user_quit(prefix.split_userinfo, parts.join.drop_first);
+                userQuit(prefix.splitUserinfo, parts.join.dropFirst);
                 
                 break;
             case "NICK":
-                user_renamed(prefix.split_userinfo, parts[0].drop_first);
+                userRenamed(prefix.splitUserinfo, parts[0].dropFirst);
                 
                 break;
             case "KICK":
-                user_kicked(prefix.split_userinfo, parts[1], parts[0], parts[2 .. $].join.drop_first);
+                userKicked(prefix.splitUserinfo, parts[1], parts[0], parts[2 .. $].join.dropFirst);
                 
                 break;
             default:
-                unknown_command(prefix, command, parts);
+                unknownCommand(prefix, command, parts);
         }
     }
     
-    private void handle_numeric(string prefix, int id, string[] parts)
+    private void handleNumeric(string prefix, int id, string[] parts)
     {
-        version(IrcDebugLogging) logDebug("handle_numeric(%s, %s, %s)", prefix, id, parts);
+        version(IrcDebugLogging) logDebug("handleNumeric(%s, %s, %s)", prefix, id, parts);
         
         switch(id)
         {
             case Numeric.RPL_WELCOME:
-                signed_on;
+                signedOn;
                 
                 break;
             case Numeric.ERR_ERRONEUSNICKNAME:
@@ -190,11 +190,11 @@ class IRCConnection
             case Numeric.ERR_NICKNAMEINUSE:
                 throw new GracelessDisconnect("Nickname already in use"); //TODO: handle gracefully?
             default:
-                unknown_numeric(prefix, id, parts);
+                unknownNumeric(prefix, id, parts);
         }
     }
     
-    private void send_messages()
+    private void flushMessageBuffer()
     {
         import std.datetime: Clock;
         
@@ -218,20 +218,20 @@ class IRCConnection
         if(bufferSent >= bufferLimit)
             return;
         
-        version(IrcDebugLogging) logDebug("irc send_messages: about to send, %s so far this period", bufferSent);
+        version(IrcDebugLogging) logDebug("irc flushMessageBuffer: about to send, %s so far this period", bufferSent);
         
         while(true)
         {
             if(buffer.length == 0)
             {
-                version(IrcDebugLogging) logDebug("irc send_messages: ran out of messages");
+                version(IrcDebugLogging) logDebug("irc flushMessageBuffer: ran out of messages");
                 
                 break;
             }
             
             if(bufferSent >= bufferLimit)
             {
-                version(IrcDebugLogging) logDebug("irc send_messages: hit buffering limit");
+                version(IrcDebugLogging) logDebug("irc flushMessageBuffer: hit buffering limit");
                 
                 break;
             }
@@ -247,7 +247,7 @@ class IRCConnection
         
         update_time;
         
-        version(IrcDebugLogging) logDebug("irc send_messages: sent %s this loop", currentSend);
+        version(IrcDebugLogging) logDebug("irc flushMessageBuffer: sent %s this loop", currentSend);
     }
     
     /++
@@ -264,7 +264,7 @@ class IRCConnection
     final @property string nickname(string newNick)
     {
         if(transport && transport.connected)
-            send_line("NICK %s", newNick);
+            sendLine("NICK %s", newNick);
         
         return _nickname = newNick;
     }
@@ -272,7 +272,7 @@ class IRCConnection
     /++
         Connect to the IRC network and start the protocol loop.
         
-        Called from $(SYMBOL_LINK irc_connect), so calling this is only necessary for reconnects.
+        Called from $(SYMBOL_LINK ircConnect), so calling this is only necessary for reconnects.
     +/
     final void connect()
     in { assert(transport is null ? true : !transport.connected); }
@@ -282,7 +282,7 @@ class IRCConnection
         import vibe.core.core: runTask;
         
         transport = connectTCP(connectionParameters.hostname, connectionParameters.port);
-        protocolTask = runTask(&protocol_loop);
+        protocolTask = runTask(&protocolLoop);
     }
     
     /++
@@ -292,7 +292,7 @@ class IRCConnection
     in { assert(transport && transport.connected); }
     body
     {
-        send_line("QUIT :%s", reason);
+        sendLine("QUIT :%s", reason);
         
         if(Task.getThis !is protocolTask)
             protocolTask.join;
@@ -307,7 +307,7 @@ class IRCConnection
             contents = format string for the line
             args = formatting arguments
     +/
-    final void send_line(Args...)(string contents, Args args)
+    final void sendLine(Args...)(string contents, Args args)
     in { assert(transport && transport.connected); }
     body
     {
@@ -331,20 +331,20 @@ class IRCConnection
             destination = _destination of the message, either a #channel or a nickname
             notice = send a NOTICE instead of a PRIVMSG
     +/
-    final void send_message(string destination, string message, bool notice = false)
+    final void send(string destination, string message, bool notice = false)
     {
         import std.string: split;
         
         foreach(line; message.split("\n"))
-            send_line("%s %s :%s", notice ? "NOTICE" : "PRIVMSG", destination, line);
+            sendLine("%s %s :%s", notice ? "NOTICE" : "PRIVMSG", destination, line);
     }
     
     /++
         Join a channel.
     +/
-    final void join_channel(string name)
+    final void join(string name)
     {
-        send_line("JOIN %s", name);
+        sendLine("JOIN %s", name);
     }
     
     /++
@@ -355,7 +355,7 @@ class IRCConnection
             command = the name of the _command
             arguments = the body of the _command
     +/
-    void unknown_command(string prefix, string command, string[] arguments) {}
+    void unknownCommand(string prefix, string command, string[] arguments) {}
     
     /++
         Called when an unknown numeric command is received.
@@ -365,7 +365,7 @@ class IRCConnection
             id = the number of the command
             arguments = the body of the command
     +/
-    void unknown_numeric(string prefix, int id, string[] arguments) {}
+    void unknownNumeric(string prefix, int id, string[] arguments) {}
     
     /++
         Called after the connection is established, before logging in to the network.
@@ -387,7 +387,7 @@ class IRCConnection
     /++
         Called after succesfully logging in to the network.
     +/
-    void signed_on() {}
+    void signedOn() {}
     
     /++
         Called upon reception of an incoming private message.
@@ -404,17 +404,17 @@ class IRCConnection
     /++
         Called when a _user joins a _channel.
     +/
-    void user_joined(User user, string channel) {}
+    void userJoined(User user, string channel) {}
     
     /++
         Called when a _user leaves a _channel.
     +/
-    void user_left(User user, string channel, string reason) {}
+    void userLeft(User user, string channel, string reason) {}
     
     /++
         Called when a _user disconnects from the network.
     +/
-    void user_quit(User user, string reason) {}
+    void userQuit(User user, string reason) {}
     
     /++
         Called when a _user is kicked from a _channel.
@@ -423,19 +423,19 @@ class IRCConnection
             kicker = the _user that performed the kick
             user = the _user that was kicked
     +/
-    void user_kicked(User kicker, string user, string channel, string reason) {}
+    void userKicked(User kicker, string user, string channel, string reason) {}
     
     /++
         Called when a _user changes their nickname.
     +/
-    void user_renamed(User user, string oldNick) {}
+    void userRenamed(User user, string oldNick) {}
 }
 
 /++
     Establish a connection to a network and construct an instance of ConnectionClass
     to handle events from that connection.
 +/
-ConnectionClass irc_connect(ConnectionClass)(ConnectionParameters parameters)
+ConnectionClass ircConnect(ConnectionClass)(ConnectionParameters parameters)
 if(is(ConnectionClass: IRCConnection))
 {
     auto connection = new ConnectionClass;

@@ -4,6 +4,8 @@ __dummy.html
 *.o
 *.obj
 *.a
+*.dll
+*.lib
 dub.selections.json
 __test__library__
 /docs

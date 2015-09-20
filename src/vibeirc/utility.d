@@ -62,7 +62,7 @@ string underline(string text)
     return "\x37%s\x37".format(text);
 }
 
-package User split_userinfo(string info)
+package User splitUserinfo(string info)
 {
     import std.regex: ctRegex, matchFirst;
     
@@ -88,13 +88,13 @@ unittest
     {
         try
         {
-            test.split_userinfo;
+            test.splitUserinfo;
             assert(false, test);
         }
         catch(Exception) {}
     }
     
-    assert("abc!def@ghi".split_userinfo == User("abc", "def", "ghi"));
+    assert("abc!def@ghi".splitUserinfo == User("abc", "def", "ghi"));
     assert_fails("abc!@");
     assert_fails("!def@");
     assert_fails("!@ghi");
@@ -104,12 +104,12 @@ unittest
     assert_fails("abc!def@");
 }
 
-package bool is_ctcp(string message)
+package bool isCTCP(string message)
 {
     return message[0] == CTCP_ENCAPSULATOR && message[$ - 1] == CTCP_ENCAPSULATOR;
 }
 
-package auto parse_ctcp(string message)
+package auto parseCTCP(string message)
 {
     struct Result
     {
@@ -117,11 +117,11 @@ package auto parse_ctcp(string message)
         string message;
     }
     
-    if(!message.is_ctcp)
+    if(!message.isCTCP)
         throw new Exception("Message is not CTCP");
     
     string command;
-    message = message.drop_first[0 .. $ - 1];
+    message = message.dropFirst[0 .. $ - 1];
     
     foreach(index, character; message)
     {
@@ -148,11 +148,11 @@ package auto parse_ctcp(string message)
 
 unittest
 {
-    assert(is_ctcp(CTCP_ENCAPSULATOR ~ "abc def" ~ CTCP_ENCAPSULATOR));
+    assert(isCTCP(CTCP_ENCAPSULATOR ~ "abc def" ~ CTCP_ENCAPSULATOR));
     
-    auto one = (CTCP_ENCAPSULATOR ~ "abc def" ~ CTCP_ENCAPSULATOR).parse_ctcp;
-    auto two = (CTCP_ENCAPSULATOR ~ "abc" ~ CTCP_ENCAPSULATOR).parse_ctcp;
-    auto three = [CTCP_ENCAPSULATOR, CTCP_ENCAPSULATOR].parse_ctcp;
+    auto one = (CTCP_ENCAPSULATOR ~ "abc def" ~ CTCP_ENCAPSULATOR).parseCTCP;
+    auto two = (CTCP_ENCAPSULATOR ~ "abc" ~ CTCP_ENCAPSULATOR).parseCTCP;
+    auto three = [CTCP_ENCAPSULATOR, CTCP_ENCAPSULATOR].parseCTCP;
     
     assert(one.command == "abc");
     assert(one.message == "def");
@@ -163,13 +163,13 @@ unittest
     
     try
     {
-        "abc".parse_ctcp;
+        "abc".parseCTCP;
         assert(false);
     }
     catch(Exception err) {}
 }
 
-package Array drop_first(Array)(Array array)
+package Array dropFirst(Array)(Array array)
 {
     import std.array: empty;
     import std.range: drop;
@@ -188,10 +188,10 @@ package auto join(Array)(Array array)
 }
 
 /+
-    Replacement for vibe.stream.operations.readLine that either reads a line immediately,
-    or returns null if a line could not be read.
+    Replacement for vibe.stream.operations.readLine that reads a line now or reads nothing.
+    Useful as it doesn't lock up the calling fiber.
 +/
-package string read_line(InputStream stream, string terminator = "\r\n")
+package string tryReadLine(InputStream stream, string terminator = "\r\n")
 {
     import vibe.stream.operations: readLine;
     
@@ -217,10 +217,10 @@ unittest
     buffer.seek(0);
     buffer.write(cast(ubyte[])"abc");
     buffer.seek(0);
-    assert(buffer.read_line == null);
+    assert(buffer.tryReadLine == null);
     buffer.seek(3);
     buffer.write(cast(ubyte[])"\r\ndef");
     buffer.seek(0);
-    assert(buffer.read_line == "abc");
+    assert(buffer.tryReadLine == "abc");
     assert(buffer.peek == "def");
 }
