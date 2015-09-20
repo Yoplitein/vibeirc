@@ -163,6 +163,244 @@ final class IRCClient
         return _bufferTimeout = newValue;
     }
     
+    private void delegate(string prefix, string command, string[] arguments) _unknownCommand;
+    
+    /++
+        Called when an unknown command is received.
+        
+        Params:
+            prefix = origin of the _command, either a server or a user
+            command = the name of the _command
+            arguments = the body of the _command
+    +/
+    @property typeof(_unknownCommand) unknownCommand()
+    {
+        return _unknownCommand;
+    }
+    
+    /++
+        ditto
+    +/
+    @property typeof(_unknownCommand) unknownCommand(typeof(_unknownCommand) newValue)
+    {
+        return _unknownCommand = newValue;
+    }
+    
+    private void delegate(string prefix, int id, string[] arguments) _unknownNumeric;
+    
+    /++
+        Called when an unknown numeric command is received.
+        
+        Params:
+            prefix = origin of the command, either a server or a user
+            id = the number of the command
+            arguments = the body of the command
+    +/
+    @property typeof(_unknownNumeric) unknownNumeric()
+    {
+        return _unknownNumeric;
+    }
+    
+    /++
+        ditto
+    +/
+    @property typeof(_unknownNumeric) unknownNumeric(typeof(_unknownNumeric) newValue)
+    {
+        return _unknownNumeric = newValue;
+    }
+    
+    private bool delegate() _connected;
+    
+    /++
+        Called after the connection is established, before logging in to the network.
+        
+        Returns:
+            whether to perform default login procedure
+            (send PASSWORD, NICK and USER commands)
+    +/
+    @property typeof(_connected) connected()
+    {
+        return _connected;
+    }
+    
+    /++
+        ditto
+    +/
+    @property typeof(_connected) connected(typeof(_connected) newValue)
+    {
+        return _connected = newValue;
+    }
+    
+    private void delegate(string reason) _disconnected;
+    
+    /++
+        Called after being _disconnected from the network.
+    +/
+    @property typeof(_disconnected) disconnected()
+    {
+        return _disconnected;
+    }
+    
+    /++
+        ditto
+    +/
+    @property typeof(_disconnected) disconnected(typeof(_disconnected) newValue)
+    {
+        return _disconnected = newValue;
+    }
+    
+    private void delegate() _signedOn;
+    
+    /++
+        Called after succesfully logging in to the network.
+    +/
+    @property typeof(_signedOn) signedOn()
+    {
+        return _signedOn;
+    }
+    
+    /++
+        ditto
+    +/
+    @property typeof(_signedOn) signedOn(typeof(_signedOn) newValue)
+    {
+        return _signedOn = newValue;
+    }
+    
+    private void delegate(Message message) _privmsg;
+    
+    /++
+        Called upon reception of an incoming message.
+        
+        Despite the name, it may have been sent either directly or to a channel.
+    +/
+    @property typeof(_privmsg) privmsg()
+    {
+        return _privmsg;
+    }
+    
+    /++
+        ditto
+    +/
+    @property typeof(_privmsg) privmsg(typeof(_privmsg) newValue)
+    {
+        return _privmsg = newValue;
+    }
+    
+    private void delegate(Message message) _notice;
+    
+    /++
+        Called upon reception of an incoming _notice.
+        
+        A _notice is similar to a privmsg, except it is expected to not generate automatic replies.
+    +/
+    @property typeof(_notice) notice()
+    {
+        return _notice;
+    }
+    
+    /++
+        ditto
+    +/
+    @property typeof(_notice) notice(typeof(_notice) newValue)
+    {
+        return _notice = newValue;
+    }
+    
+    private void delegate(User user, string channel) _userJoined;
+    
+    /++
+        Called when a _user joins a _channel.
+    +/
+    @property typeof(_userJoined) userJoined()
+    {
+        return _userJoined;
+    }
+    
+    /++
+        ditto
+    +/
+    @property typeof(_userJoined) userJoined(typeof(_userJoined) newValue)
+    {
+        return _userJoined = newValue;
+    }
+    
+    private void delegate(User user, string channel, string reason) _userLeft;
+    
+    /++
+        Called when a _user leaves a _channel.
+    +/
+    @property typeof(_userLeft) userLeft()
+    {
+        return _userLeft;
+    }
+    
+    /++
+        ditto
+    +/
+    @property typeof(_userLeft) userLeft(typeof(_userLeft) newValue)
+    {
+        return _userLeft = newValue;
+    }
+    
+    private void delegate(User user, string reason) _userQuit;
+    
+    /++
+        Called when a _user disconnects from the network.
+    +/
+    @property typeof(_userQuit) userQuit()
+    {
+        return _userQuit;
+    }
+    
+    /++
+        ditto
+    +/
+    @property typeof(_userQuit) userQuit(typeof(_userQuit) newValue)
+    {
+        return _userQuit = newValue;
+    }
+    
+    private void delegate(User kicker, string user, string channel, string reason) _userKicked;
+    
+    /++
+        Called when a _user is kicked from a _channel.
+        
+        Params:
+            kicker = the _user that performed the kick
+            user = the _user that was kicked
+    +/
+    @property typeof(_userKicked) userKicked()
+    {
+        return _userKicked;
+    }
+    
+    /++
+        ditto
+    +/
+    @property typeof(_userKicked) userKicked(typeof(_userKicked) newValue)
+    {
+        return _userKicked = newValue;
+    }
+    
+    private void delegate(User user, string oldNick) _userRenamed;
+    
+    /++
+        Called when a _user changes their nickname.
+    +/
+    @property typeof(_userRenamed) userRenamed()
+    {
+        return _userRenamed;
+    }
+    
+    /++
+        ditto
+    +/
+    @property typeof(_userRenamed) userRenamed(typeof(_userRenamed) newValue)
+    {
+        return _userRenamed = newValue;
+    }
+    
     private void protocolLoop(string password)
     in { assert(transport && transport.connected); }
     body
@@ -457,90 +695,4 @@ final class IRCClient
     {
         sendLine("JOIN %s", name);
     }
-    
-    /++
-        Called when an unknown command is received.
-        
-        Params:
-            prefix = origin of the _command, either a server or a user
-            command = the name of the _command
-            arguments = the body of the _command
-    +/
-    void unknownCommand(string prefix, string command, string[] arguments) {}
-    
-    /++
-        Called when an unknown numeric command is received.
-        
-        Params:
-            prefix = origin of the command, either a server or a user
-            id = the number of the command
-            arguments = the body of the command
-    +/
-    void unknownNumeric(string prefix, int id, string[] arguments) {}
-    
-    /++
-        Called after the connection is established, before logging in to the network.
-        
-        Returns:
-            whether to perform default login procedure
-            (send PASSWORD, NICK and USER commands)
-    +/
-    bool connected()
-    {
-        return true;
-    }
-    
-    /++
-        Called after being _disconnected from the network.
-    +/
-    void disconnected(string reason) {}
-    
-    /++
-        Called after succesfully logging in to the network.
-    +/
-    void signedOn() {}
-    
-    /++
-        Called upon reception of an incoming message.
-        
-        Despite the name, it may have been sent either directly or to a channel.
-    +/
-    void privmsg(Message message) {}
-    
-    /++
-        Called upon reception of an incoming _notice.
-        
-        A _notice is similar to a privmsg, except it is expected to not generate automatic replies.
-    +/
-    void notice(Message message) {}
-    
-    /++
-        Called when a _user joins a _channel.
-    +/
-    void userJoined(User user, string channel) {}
-    
-    /++
-        Called when a _user leaves a _channel.
-    +/
-    void userLeft(User user, string channel, string reason) {}
-    
-    /++
-        Called when a _user disconnects from the network.
-    +/
-    void userQuit(User user, string reason) {}
-    
-    /++
-        Called when a _user is kicked from a _channel.
-        
-        Params:
-            kicker = the _user that performed the kick
-            user = the _user that was kicked
-    +/
-    void userKicked(User kicker, string user, string channel, string reason) {}
-    
-    /++
-        Called when a _user changes their nickname.
-    +/
-    void userRenamed(User user, string oldNick) {}
 }
-
