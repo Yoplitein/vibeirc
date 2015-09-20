@@ -164,7 +164,7 @@ final class IRCClient
         return _bufferTimeout = newValue;
     }
     
-    private void delegate(string prefix, string command, string[] arguments) _unknownCommand;
+    private void delegate(string prefix, string command, string[] arguments) _onUnknownCommand;
     
     /++
         Called when an unknown command is received.
@@ -174,20 +174,20 @@ final class IRCClient
             command = the name of the _command
             arguments = the body of the _command
     +/
-    @property typeof(_unknownCommand) unknownCommand()
+    @property typeof(_onUnknownCommand) onUnknownCommand()
     {
-        return _unknownCommand;
+        return _onUnknownCommand;
     }
     
     /++
         ditto
     +/
-    @property typeof(_unknownCommand) unknownCommand(typeof(_unknownCommand) newValue)
+    @property typeof(_onUnknownCommand) onUnknownCommand(typeof(_onUnknownCommand) newValue)
     {
-        return _unknownCommand = newValue;
+        return _onUnknownCommand = newValue;
     }
     
-    private void delegate(string prefix, int id, string[] arguments) _unknownNumeric;
+    private void delegate(string prefix, int id, string[] arguments) _onUnknownNumeric;
     
     /++
         Called when an unknown numeric command is received.
@@ -197,20 +197,20 @@ final class IRCClient
             id = the number of the command
             arguments = the body of the command
     +/
-    @property typeof(_unknownNumeric) unknownNumeric()
+    @property typeof(_onUnknownNumeric) onUnknownNumeric()
     {
-        return _unknownNumeric;
+        return _onUnknownNumeric;
     }
     
     /++
         ditto
     +/
-    @property typeof(_unknownNumeric) unknownNumeric(typeof(_unknownNumeric) newValue)
+    @property typeof(_onUnknownNumeric) onUnknownNumeric(typeof(_onUnknownNumeric) newValue)
     {
-        return _unknownNumeric = newValue;
+        return _onUnknownNumeric = newValue;
     }
     
-    private bool delegate() _connected;
+    private bool delegate() _onConnect;
     
     /++
         Called after the connection is established, before logging in to the network.
@@ -219,150 +219,150 @@ final class IRCClient
             whether to perform default login procedure
             (send PASSWORD, NICK and USER commands)
     +/
-    @property typeof(_connected) connected()
+    @property typeof(_onConnect) onConnect()
     {
-        return _connected;
+        return _onConnect;
     }
     
     /++
         ditto
     +/
-    @property typeof(_connected) connected(typeof(_connected) newValue)
+    @property typeof(_onConnect) onConnect(typeof(_onConnect) newValue)
     {
-        return _connected = newValue;
+        return _onConnect = newValue;
     }
     
-    private void delegate(string reason) _disconnected;
+    private void delegate(string reason) _onDisconnect;
     
     /++
         Called after being _disconnected from the network.
     +/
-    @property typeof(_disconnected) disconnected()
+    @property typeof(_onDisconnect) onDisconnect()
     {
-        return _disconnected;
+        return _onDisconnect;
     }
     
     /++
         ditto
     +/
-    @property typeof(_disconnected) disconnected(typeof(_disconnected) newValue)
+    @property typeof(_onDisconnect) onDisconnect(typeof(_onDisconnect) newValue)
     {
-        return _disconnected = newValue;
+        return _onDisconnect = newValue;
     }
     
-    private void delegate() _signedOn;
+    private void delegate() _onLogin;
     
     /++
         Called after succesfully logging in to the network.
     +/
-    @property typeof(_signedOn) signedOn()
+    @property typeof(_onLogin) onLogin()
     {
-        return _signedOn;
+        return _onLogin;
     }
     
     /++
         ditto
     +/
-    @property typeof(_signedOn) signedOn(typeof(_signedOn) newValue)
+    @property typeof(_onLogin) onLogin(typeof(_onLogin) newValue)
     {
-        return _signedOn = newValue;
+        return _onLogin = newValue;
     }
     
-    private void delegate(Message message) _privmsg;
+    private void delegate(Message message) _onMessage;
     
     /++
         Called upon reception of an incoming message.
         
         Despite the name, it may have been sent either directly or to a channel.
     +/
-    @property typeof(_privmsg) privmsg()
+    @property typeof(_onMessage) onMessage()
     {
-        return _privmsg;
+        return _onMessage;
     }
     
     /++
         ditto
     +/
-    @property typeof(_privmsg) privmsg(typeof(_privmsg) newValue)
+    @property typeof(_onMessage) onMessage(typeof(_onMessage) newValue)
     {
-        return _privmsg = newValue;
+        return _onMessage = newValue;
     }
     
-    private void delegate(Message message) _notice;
+    private void delegate(Message message) _onNotice;
     
     /++
         Called upon reception of an incoming _notice.
         
         A _notice is similar to a privmsg, except it is expected to not generate automatic replies.
     +/
-    @property typeof(_notice) notice()
+    @property typeof(_onNotice) onNotice()
     {
-        return _notice;
+        return _onNotice;
     }
     
     /++
         ditto
     +/
-    @property typeof(_notice) notice(typeof(_notice) newValue)
+    @property typeof(_onNotice) onNotice(typeof(_onNotice) newValue)
     {
-        return _notice = newValue;
+        return _onNotice = newValue;
     }
     
-    private void delegate(User user, string channel) _userJoined;
+    private void delegate(User user, string channel) _onUserJoin;
     
     /++
         Called when a _user joins a _channel.
     +/
-    @property typeof(_userJoined) userJoined()
+    @property typeof(_onUserJoin) onUserJoin()
     {
-        return _userJoined;
+        return _onUserJoin;
     }
     
     /++
         ditto
     +/
-    @property typeof(_userJoined) userJoined(typeof(_userJoined) newValue)
+    @property typeof(_onUserJoin) onUserJoin(typeof(_onUserJoin) newValue)
     {
-        return _userJoined = newValue;
+        return _onUserJoin = newValue;
     }
     
-    private void delegate(User user, string channel, string reason) _userLeft;
+    private void delegate(User user, string channel, string reason) _onUserPart;
     
     /++
         Called when a _user leaves a _channel.
     +/
-    @property typeof(_userLeft) userLeft()
+    @property typeof(_onUserPart) onUserPart()
     {
-        return _userLeft;
+        return _onUserPart;
     }
     
     /++
         ditto
     +/
-    @property typeof(_userLeft) userLeft(typeof(_userLeft) newValue)
+    @property typeof(_onUserPart) onUserPart(typeof(_onUserPart) newValue)
     {
-        return _userLeft = newValue;
+        return _onUserPart = newValue;
     }
     
-    private void delegate(User user, string reason) _userQuit;
+    private void delegate(User user, string reason) _onUserQuit;
     
     /++
         Called when a _user disconnects from the network.
     +/
-    @property typeof(_userQuit) userQuit()
+    @property typeof(_onUserQuit) onUserQuit()
     {
-        return _userQuit;
+        return _onUserQuit;
     }
     
     /++
         ditto
     +/
-    @property typeof(_userQuit) userQuit(typeof(_userQuit) newValue)
+    @property typeof(_onUserQuit) onUserQuit(typeof(_onUserQuit) newValue)
     {
-        return _userQuit = newValue;
+        return _onUserQuit = newValue;
     }
     
-    private void delegate(User kicker, string user, string channel, string reason) _userKicked;
+    private void delegate(User kicker, string user, string channel, string reason) _onUserKick;
     
     /++
         Called when a _user is kicked from a _channel.
@@ -371,35 +371,35 @@ final class IRCClient
             kicker = the _user that performed the kick
             user = the _user that was kicked
     +/
-    @property typeof(_userKicked) userKicked()
+    @property typeof(_onUserKick) onUserKick()
     {
-        return _userKicked;
+        return _onUserKick;
     }
     
     /++
         ditto
     +/
-    @property typeof(_userKicked) userKicked(typeof(_userKicked) newValue)
+    @property typeof(_onUserKick) onUserKick(typeof(_onUserKick) newValue)
     {
-        return _userKicked = newValue;
+        return _onUserKick = newValue;
     }
     
-    private void delegate(User user, string oldNick) _userRenamed;
+    private void delegate(User user, string oldNick) _onUserRename;
     
     /++
         Called when a _user changes their nickname.
     +/
-    @property typeof(_userRenamed) userRenamed()
+    @property typeof(_onUserRename) onUserRename()
     {
-        return _userRenamed;
+        return _onUserRename;
     }
     
     /++
         ditto
     +/
-    @property typeof(_userRenamed) userRenamed(typeof(_userRenamed) newValue)
+    @property typeof(_onUserRename) onUserRename(typeof(_onUserRename) newValue)
     {
-        return _userRenamed = newValue;
+        return _onUserRename = newValue;
     }
     
     private void protocolLoop(string password)
@@ -413,7 +413,7 @@ final class IRCClient
         
         version(IrcDebugLogging) logDebug("irc connected");
         
-        if(connected)
+        if(runCallback(onConnect)) //TODO: flip meaning of return type
         {
             if(password != null)
                 sendLine("PASS %s", password);
@@ -457,7 +457,7 @@ final class IRCClient
             }
         }
         
-        runCallback(disconnected, disconnectReason);
+        runCallback(onDisconnect, disconnectReason);
         version(IrcDebugLogging) logDebug("irc disconnected");
     }
     
@@ -508,33 +508,33 @@ final class IRCClient
                 }
                 
                 if(command == "NOTICE")
-                    runCallback(notice, msg);
+                    runCallback(onNotice, msg);
                 else
-                    runCallback(privmsg, msg);
+                    runCallback(onMessage, msg);
                 
                 break;
             case "JOIN":
-                runCallback(userJoined, prefix.splitUserinfo, parts[0].dropFirst);
+                runCallback(onUserJoin, prefix.splitUserinfo, parts[0].dropFirst);
                 
                 break;
             case "PART":
-                runCallback(userLeft, prefix.splitUserinfo, parts[0], parts.dropFirst.join.dropFirst);
+                runCallback(onUserPart, prefix.splitUserinfo, parts[0], parts.dropFirst.join.dropFirst);
                 
                 break;
             case "QUIT":
-                runCallback(userQuit, prefix.splitUserinfo, parts.join.dropFirst);
+                runCallback(onUserQuit, prefix.splitUserinfo, parts.join.dropFirst);
                 
                 break;
             case "NICK":
-                runCallback(userRenamed, prefix.splitUserinfo, parts[0].dropFirst);
+                runCallback(onUserRename, prefix.splitUserinfo, parts[0].dropFirst);
                 
                 break;
             case "KICK":
-                runCallback(userKicked, prefix.splitUserinfo, parts[1], parts[0], parts[2 .. $].join.dropFirst);
+                runCallback(onUserKick, prefix.splitUserinfo, parts[1], parts[0], parts[2 .. $].join.dropFirst);
                 
                 break;
             default:
-                runCallback(unknownCommand, prefix, command, parts);
+                runCallback(onUnknownCommand, prefix, command, parts);
         }
     }
     
@@ -545,7 +545,7 @@ final class IRCClient
         switch(id)
         {
             case Numeric.RPL_WELCOME:
-                signedOn;
+                onLogin;
                 
                 break;
             case Numeric.ERR_ERRONEUSNICKNAME:
@@ -553,7 +553,7 @@ final class IRCClient
             case Numeric.ERR_NICKNAMEINUSE:
                 throw new GracelessDisconnect("Nickname already in use"); //TODO: handle gracefully?
             default:
-                runCallback(unknownNumeric, prefix, id, parts);
+                runCallback(onUnknownNumeric, prefix, id, parts);
         }
     }
     
