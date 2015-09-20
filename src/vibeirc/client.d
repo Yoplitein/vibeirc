@@ -614,7 +614,9 @@ final class IRCClient
         switch(id)
         {
             case Numeric.RPL_WELCOME:
-                onLogin;
+                version(IrcDebugLogging) logDebug("irc logged in");
+                
+                runCallback(onLogin);
                 
                 break;
             case Numeric.ERR_ERRONEUSNICKNAME:
@@ -730,7 +732,12 @@ final class IRCClient
         //TODO: check if already connected
         
         transport = connectTCP(host, port);
-        protocolTask = runTask(&protocolLoop, password);
+        protocolTask = runTask(
+            {
+                version(IrcDebugLogging) logDebug("Starting protocol loop");
+                protocolLoop(password);
+            }
+        );
     }
     
     /++
