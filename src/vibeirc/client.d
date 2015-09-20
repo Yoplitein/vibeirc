@@ -77,7 +77,7 @@ class IRCConnection
             
             if(line == null)
             {
-                sleep(dur!"msecs"(10));
+                sleep(sleepTimeout);
                 
                 continue;
             }
