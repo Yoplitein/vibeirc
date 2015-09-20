@@ -203,6 +203,24 @@ final class IRCClient
         return transport && transport.connected;
     }
     
+    private bool _loggedIn;
+    
+    /++
+        Whether or not this connection has successfully logged in to the network.
+    +/
+    @property bool loggedIn()
+    {
+        return _loggedIn;
+    }
+    
+    /++
+        ditto
+    +/
+    @property bool loggedIn(bool newValue)
+    {
+        return _loggedIn = newValue;
+    }
+    
     /*======================================*
      *======================================*
      *              Callbacks               *
@@ -538,6 +556,8 @@ final class IRCClient
             }
         }
         
+        loggedIn = false;
+        
         runCallback(onDisconnect, disconnectReason);
         version(IrcDebugLogging) logDebug("irc disconnected");
     }
@@ -628,13 +648,21 @@ final class IRCClient
             case Numeric.RPL_WELCOME:
                 version(IrcDebugLogging) logDebug("irc logged in");
                 
+                loggedIn = true;
+                
                 runCallback(onLogin);
                 
                 break;
             case Numeric.ERR_ERRONEUSNICKNAME:
-                throw new GracelessDisconnect("Erroneus nickname"); //TODO: handle gracefully?
+                if(!loggedIn)
+                    throw new GracelessDisconnect("Erroneus nickname");
+                
+                break;
             case Numeric.ERR_NICKNAMEINUSE:
-                throw new GracelessDisconnect("Nickname already in use"); //TODO: handle gracefully?
+                if(!loggedIn)
+                    throw new GracelessDisconnect("Nickname already in use");
+                
+                break;
             default:
                 runCallback(onUnknownNumeric, prefix, id, parts);
         }
