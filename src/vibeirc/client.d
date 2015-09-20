@@ -17,29 +17,27 @@ class IRCConnection
     import vibe.core.task: Task;
     
     private string _nickname;
+    private string _username; //Username in WHOIS info
+    private string _realname; //Real name in WHOIS info
     private Task protocolTask;
     private string[] buffer; //Buffered messages
     private uint bufferSent = 0; //Number of messages sent this time period
     private SysTime bufferNextTime; //The start of the next time period
-    ConnectionParameters connectionParameters; ///The connection parameters passed to ircConnect.
-    TCPConnection transport; ///The vibe socket underlying this connection.
+    private TCPConnection transport;
+    
+    //TODO: getters/setters
     Duration sleepTimeout = dur!"msecs"(10); ///How long the protocol loop should sleep after failing to read a line.
     bool buffering = false; ///Whether to buffer outgoing messages.
     uint bufferLimit = 20; ///Maximum number of messages to send per time period, if buffering is enabled.
     Duration bufferTimeout = dur!"seconds"(30); ///Amount of time to wait before sending each batch of messages, if buffering is enabled.
     
-    /++
-        Default constructor. Should not be called from user code.
-        
-        See_Also:
-            ircConnect
-    +/
-    protected this()
+    ///
+    this()
     {
         bufferNextTime = SysTime(0L);
     }
     
-    private void protocolLoop()
+    private void protocolLoop(string host, ushort port, string password)
     in { assert(transport && transport.connected); }
     body
     {
@@ -134,7 +132,7 @@ class IRCConnection
                 Message msg;
                 string message = parts.dropFirst.join;
                 msg.sender = prefix.splitUserinfo;
-                msg.receiver = parts[0];
+                msg.target = parts[0];
                 msg.message = message != null ? message.dropFirst : "";
                 
                 if(message.isCTCP)
@@ -272,23 +270,28 @@ class IRCConnection
     /++
         Connect to the IRC network and start the protocol loop.
         
-        Called from ircConnect, so calling this is only necessary for reconnects.
+        Params:
+            host = hostname/address to connect to
+            port = port to connect on
+            password = password to use when logging in to the network (optional)
     +/
-    final void connect()
+    final void connect(string host, ushort port, string password = null)
     in { assert(transport is null ? true : !transport.connected); }
     body
     {
         import vibe.core.net: connectTCP;
         import vibe.core.core: runTask;
         
+        //TODO: check if already connected
+        
         transport = connectTCP(connectionParameters.hostname, connectionParameters.port);
-        protocolTask = runTask(&protocolLoop);
+        protocolTask = runTask({ protocolLoop(host, port, password); });
     }
     
     /++
         Disconnect from the network, giving reason as the quit message.
     +/
-    final void disconnect(string reason)
+    final void quit(string reason)
     in { assert(transport && transport.connected); }
     body
     {
@@ -432,20 +435,5 @@ class IRCConnection
         Called when a _user changes their nickname.
     +/
     void userRenamed(User user, string oldNick) {}
-}
-
-/++
-    Establish a connection to a network and construct an instance of ConnectionClass
-    to handle events from that connection.
-+/
-ConnectionClass ircConnect(ConnectionClass)(ConnectionParameters parameters)
-if(is(ConnectionClass: IRCConnection))
-{
-    auto connection = new ConnectionClass;
-    connection.connectionParameters = parameters;
-    
-    connection.connect;
-    
-    return connection;
 }
 
