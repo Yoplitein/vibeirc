@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Class IRCClient</title>
+		<link rel="stylesheet" type="text/css" href="../../styles/ddox.css"/>
+		<link rel="stylesheet" href="../../prettify/prettify.css" type="text/css"/>
+		<script type="text/javascript" src="../../scripts/jquery.js">/**/</script>
+		<script type="text/javascript" src="../../prettify/prettify.js">/**/</script>
+		<script type="text/javascript" src="../../scripts/ddox.js">/**/</script>
+	</head>
+	<body onload="prettyPrint(); setupDdox();">
+		<nav id="main-nav">
+						<ul class="tree-view">
+							<li class=" tree-view">
+								<a href="#" class="package">vibeirc</a>
+						<ul class="tree-view">
+							<li>
+								<a href="../../vibeirc/client.html" class="selected module">client</a>
+							</li>
+							<li>
+								<a href="../../vibeirc/constants.html" class=" module">constants</a>
+							</li>
+							<li>
+								<a href="../../vibeirc/data.html" class=" module">data</a>
+							</li>
+							<li>
+								<a href="../../vibeirc/utility.html" class=" module">utility</a>
+							</li>
+						</ul>
+							</li>
+						</ul>
+				<noscript>
+					<p style="color: red">The search functionality needs JavaScript enabled</p>
+				</noscript>
+				<div id="symbolSearchPane" style="display: none">
+					<p>
+						<input id="symbolSearch" type="text" placeholder="Search for symbols" onchange="performSymbolSearch(24);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"/>
+					</p>
+	<ul id="symbolSearchResults" style="display: none"></ul>
+	<script type="application/javascript" src="../../symbols.js"></script>
+	<script type="application/javascript">
+var symbolSearchRootDir = "../../";
+$('#symbolSearchPane').show();
+	</script>
+				</div>
+		</nav>
+		<div id="main-contents">
+			<h1>Class IRCClient</h1>
+			<section>
+				<p>    Represents a connection to an IRC server.
+</p>
+
+					<section>
+						<h3>Inherits from</h3>
+						<ul>
+							<li>
+								<code class="prettyprint lang-d"><code class="prettyprint lang-d">Object</code></code>
+ (base class)
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Constructors</h3>
+						<table>
+							<col class="caption"/>
+							<tr>
+								<th>Name</th>
+								<th>Description</th>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/client/IRCClient.this.html" class="public">
+										<code>this</code>
+									</a>
+								</td>
+								<td></td>
+							</tr>
+						</table>
+					</section>
+					<section>
+						<h3>Properties</h3>
+						<table>
+							<col class="caption"/>
+							<tr>
+								<th>Name</th>
+								<th>Type</th>
+								<th>Description</th>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/client/IRCClient.buffering.html" class="public property"><code>buffering</code></a>
+									<span class="tableEntryAnnotation">[get, set]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d">bool</code></td>
+								<td>        Whether to buffer outgoing messages.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/client/IRCClient.bufferLimit.html" class="public property"><code>bufferLimit</code></a>
+									<span class="tableEntryAnnotation">[get, set]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d">uint</code></td>
+								<td>        Maximum number of messages to <a href="../../vibeirc/client/IRCClient.send.html"><code class="prettyprint lang-d">send</code></a> per time period, if <a href="../../vibeirc/client/IRCClient.buffering.html"><code class="prettyprint lang-d">buffering</code></a> is enabled.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/client/IRCClient.bufferTimeout.html" class="public property"><code>bufferTimeout</code></a>
+									<span class="tableEntryAnnotation">[get, set]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d">core.<wbr/>time.<wbr/>Duration</code></td>
+								<td>        Amount of time to wait before sending each batch of messages, if <a href="../../vibeirc/client/IRCClient.buffering.html"><code class="prettyprint lang-d">buffering</code></a> is enabled.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/client/IRCClient.connected.html" class="public property"><code>connected</code></a>
+									<span class="tableEntryAnnotation">[get]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d">bool</code></td>
+								<td>        Returns whether this connection is active.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/client/IRCClient.loggedIn.html" class="public property"><code>loggedIn</code></a>
+									<span class="tableEntryAnnotation">[get, set]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d">bool</code></td>
+								<td>        Whether or not this connection has successfully logged in to the network.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/client/IRCClient.nickname.html" class="public property"><code>nickname</code></a>
+									<span class="tableEntryAnnotation">[get, set]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d">string</code></td>
+								<td>        The display name this client will use.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/client/IRCClient.onConnect.html" class="public property"><code>onConnect</code></a>
+									<span class="tableEntryAnnotation">[get, set]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d"><a href="../../vibeirc/client/PerformLogin.html">PerformLogin</a> delegate()</code></td>
+								<td>        Called after the connection is established, before logging in to the network.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/client/IRCClient.onDisconnect.html" class="public property"><code>onDisconnect</code></a>
+									<span class="tableEntryAnnotation">[get, set]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d">void delegate(string)</code></td>
+								<td>        Called after being disconnected from the network.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/client/IRCClient.onLogin.html" class="public property"><code>onLogin</code></a>
+									<span class="tableEntryAnnotation">[get, set]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d">void delegate()</code></td>
+								<td>        Called after succesfully logging in to the network.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/client/IRCClient.onMessage.html" class="public property"><code>onMessage</code></a>
+									<span class="tableEntryAnnotation">[get, set]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d">void delegate(<a href="../../vibeirc/data/Message.html">Message</a>)</code></td>
+								<td>        Called upon reception of an incoming message.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/client/IRCClient.onNotice.html" class="public property"><code>onNotice</code></a>
+									<span class="tableEntryAnnotation">[get, set]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d">void delegate(<a href="../../vibeirc/data/Message.html">Message</a>)</code></td>
+								<td>        Called upon reception of an incoming notice.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/client/IRCClient.onUnknownCommand.html" class="public property"><code>onUnknownCommand</code></a>
+									<span class="tableEntryAnnotation">[get, set]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d">void delegate(string, string, string[])</code></td>
+								<td>        Called when an unknown command is received.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/client/IRCClient.onUnknownNumeric.html" class="public property"><code>onUnknownNumeric</code></a>
+									<span class="tableEntryAnnotation">[get, set]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d">void delegate(string, int, string[])</code></td>
+								<td>        Called when an unknown numeric command is received.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/client/IRCClient.onUserJoin.html" class="public property"><code>onUserJoin</code></a>
+									<span class="tableEntryAnnotation">[get, set]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d">void delegate(<a href="../../vibeirc/data/User.html">User</a>, string)</code></td>
+								<td>        Called when a user joins a channel.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/client/IRCClient.onUserKick.html" class="public property"><code>onUserKick</code></a>
+									<span class="tableEntryAnnotation">[get, set]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d">void delegate(<a href="../../vibeirc/data/User.html">User</a>, string, string, string)</code></td>
+								<td>        Called when a user is kicked from a channel.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/client/IRCClient.onUserPart.html" class="public property"><code>onUserPart</code></a>
+									<span class="tableEntryAnnotation">[get, set]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d">void delegate(<a href="../../vibeirc/data/User.html">User</a>, string, string)</code></td>
+								<td>        Called when a user leaves a channel.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/client/IRCClient.onUserQuit.html" class="public property"><code>onUserQuit</code></a>
+									<span class="tableEntryAnnotation">[get, set]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d">void delegate(<a href="../../vibeirc/data/User.html">User</a>, string)</code></td>
+								<td>        Called when a user disconnects from the network.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/client/IRCClient.onUserRename.html" class="public property"><code>onUserRename</code></a>
+									<span class="tableEntryAnnotation">[get, set]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d">void delegate(<a href="../../vibeirc/data/User.html">User</a>, string)</code></td>
+								<td>        Called when a user changes their <a href="../../vibeirc/client/IRCClient.nickname.html"><code class="prettyprint lang-d">nickname</code></a>.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/client/IRCClient.realname.html" class="public property"><code>realname</code></a>
+									<span class="tableEntryAnnotation">[get, set]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d">string</code></td>
+								<td>        The real name shown by the WHOIS command.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/client/IRCClient.sleepTimeout.html" class="public property"><code>sleepTimeout</code></a>
+									<span class="tableEntryAnnotation">[get, set]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d">core.<wbr/>time.<wbr/>Duration</code></td>
+								<td>        How long the protocol loop should sleep after failing to read a line.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/client/IRCClient.username.html" class="public property"><code>username</code></a>
+									<span class="tableEntryAnnotation">[get, set]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d">string</code></td>
+								<td>        The <a href="../../vibeirc/client/IRCClient.username.html"><code class="prettyprint lang-d">username</code></a> shown by the WHOIS command.
+</td>
+							</tr>
+						</table>
+					</section>
+					<section>
+						<h3>Methods</h3>
+						<table>
+							<col class="caption"/>
+							<tr>
+								<th>Name</th>
+								<th>Description</th>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/client/IRCClient.connect.html" class="public">
+										<code>connect</code>
+									</a>
+								</td>
+								<td>        Connect to the IRC network and start the protocol loop.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/client/IRCClient.join.html" class="public">
+										<code>join</code>
+									</a>
+								</td>
+								<td>        Join a channel.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/client/IRCClient.quit.html" class="public">
+										<code>quit</code>
+									</a>
+								</td>
+								<td>        Disconnect from the network, giving <a href="../../vibeirc/client/IRCClient.quit.html#reason"><code class="prettyprint lang-d">reason</code></a> as the <code class="prettyprint lang-d">quit</code> message.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/client/IRCClient.send.html" class="public">
+										<code>send</code>
+									</a>
+								</td>
+								<td>        Send a <a href="../../vibeirc/client/IRCClient.send.html#message"><code class="prettyprint lang-d">message</code></a>.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/client/IRCClient.sendLine.html" class="public">
+										<code>sendLine</code>
+									</a>
+								</td>
+								<td>        Send a raw IRC command.
+</td>
+							</tr>
+						</table>
+					</section>
+
+			</section>
+			<section>
+				<h2>Authors</h2>
+
+			</section>
+			<section>
+				<h2>Copyright</h2>
+
+			</section>
+			<section>
+				<h2>License</h2>
+
+			</section>
+		</div>
+	</body>
+</html>

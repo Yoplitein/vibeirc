@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Struct Message</title>
+		<link rel="stylesheet" type="text/css" href="../../styles/ddox.css"/>
+		<link rel="stylesheet" href="../../prettify/prettify.css" type="text/css"/>
+		<script type="text/javascript" src="../../scripts/jquery.js">/**/</script>
+		<script type="text/javascript" src="../../prettify/prettify.js">/**/</script>
+		<script type="text/javascript" src="../../scripts/ddox.js">/**/</script>
+	</head>
+	<body onload="prettyPrint(); setupDdox();">
+		<nav id="main-nav">
+						<ul class="tree-view">
+							<li class=" tree-view">
+								<a href="#" class="package">vibeirc</a>
+						<ul class="tree-view">
+							<li>
+								<a href="../../vibeirc/client.html" class=" module">client</a>
+							</li>
+							<li>
+								<a href="../../vibeirc/constants.html" class=" module">constants</a>
+							</li>
+							<li>
+								<a href="../../vibeirc/data.html" class="selected module">data</a>
+							</li>
+							<li>
+								<a href="../../vibeirc/utility.html" class=" module">utility</a>
+							</li>
+						</ul>
+							</li>
+						</ul>
+				<noscript>
+					<p style="color: red">The search functionality needs JavaScript enabled</p>
+				</noscript>
+				<div id="symbolSearchPane" style="display: none">
+					<p>
+						<input id="symbolSearch" type="text" placeholder="Search for symbols" onchange="performSymbolSearch(24);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"/>
+					</p>
+	<ul id="symbolSearchResults" style="display: none"></ul>
+	<script type="application/javascript" src="../../symbols.js"></script>
+	<script type="application/javascript">
+var symbolSearchRootDir = "../../";
+$('#symbolSearchPane').show();
+	</script>
+				</div>
+		</nav>
+		<div id="main-contents">
+			<h1>Struct Message</h1>
+			<section>
+				<p>    A struct containing details about an incoming <a href="../../vibeirc/data/Message.message.html"><code class="prettyprint lang-d">message</code></a>.
+</p>
+
+					<section>
+						<h3>Fields</h3>
+						<table>
+							<col class="caption"/>
+							<tr>
+								<th>Name</th>
+								<th>Type</th>
+								<th>Description</th>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/data/Message.ctcpCommand.html" class="public"><code>ctcpCommand</code></a>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d">string</code></td>
+								<td>The CTCP command, if any.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/data/Message.message.html" class="public"><code>message</code></a>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d">string</code></td>
+								<td>The message body.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/data/Message.sender.html" class="public"><code>sender</code></a>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d"><a href="../../vibeirc/data/User.html">User</a></code></td>
+								<td>The user who sent the <a href="../../vibeirc/data/Message.message.html"><code class="prettyprint lang-d">message</code></a>.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/data/Message.target.html" class="public"><code>target</code></a>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d">string</code></td>
+								<td>The destination of the <a href="../../vibeirc/data/Message.message.html"><code class="prettyprint lang-d">message</code></a>, either a user or a channel.
+</td>
+							</tr>
+						</table>
+					</section>
+					<section>
+						<h3>Properties</h3>
+						<table>
+							<col class="caption"/>
+							<tr>
+								<th>Name</th>
+								<th>Type</th>
+								<th>Description</th>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/data/Message.isCTCP.html" class="public property"><code>isCTCP</code></a>
+									<span class="tableEntryAnnotation">[get]</span>
+								</td>
+								<td class="typecol"><code class="prettyprint lang-d">bool</code></td>
+								<td>        Returns whether this <a href="../../vibeirc/data/Message.message.html"><code class="prettyprint lang-d">message</code></a> uses CTCP.
+</td>
+							</tr>
+						</table>
+					</section>
+
+			</section>
+			<section>
+				<h2>Authors</h2>
+
+			</section>
+			<section>
+				<h2>Copyright</h2>
+
+			</section>
+			<section>
+				<h2>License</h2>
+
+			</section>
+		</div>
+	</body>
+</html>

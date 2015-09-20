@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Enum Numeric</title>
+		<link rel="stylesheet" type="text/css" href="../../styles/ddox.css"/>
+		<link rel="stylesheet" href="../../prettify/prettify.css" type="text/css"/>
+		<script type="text/javascript" src="../../scripts/jquery.js">/**/</script>
+		<script type="text/javascript" src="../../prettify/prettify.js">/**/</script>
+		<script type="text/javascript" src="../../scripts/ddox.js">/**/</script>
+	</head>
+	<body onload="prettyPrint(); setupDdox();">
+		<nav id="main-nav">
+						<ul class="tree-view">
+							<li class=" tree-view">
+								<a href="#" class="package">vibeirc</a>
+						<ul class="tree-view">
+							<li>
+								<a href="../../vibeirc/client.html" class=" module">client</a>
+							</li>
+							<li>
+								<a href="../../vibeirc/constants.html" class="selected module">constants</a>
+							</li>
+							<li>
+								<a href="../../vibeirc/data.html" class=" module">data</a>
+							</li>
+							<li>
+								<a href="../../vibeirc/utility.html" class=" module">utility</a>
+							</li>
+						</ul>
+							</li>
+						</ul>
+				<noscript>
+					<p style="color: red">The search functionality needs JavaScript enabled</p>
+				</noscript>
+				<div id="symbolSearchPane" style="display: none">
+					<p>
+						<input id="symbolSearch" type="text" placeholder="Search for symbols" onchange="performSymbolSearch(24);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"/>
+					</p>
+	<ul id="symbolSearchResults" style="display: none"></ul>
+	<script type="application/javascript" src="../../symbols.js"></script>
+	<script type="application/javascript">
+var symbolSearchRootDir = "../../";
+$('#symbolSearchPane').show();
+	</script>
+				</div>
+		</nav>
+		<div id="main-contents">
+			<h1>Enum Numeric</h1>
+			<section>
+				<p>    Numerics used in place of words in IRC commands.
+    Only sent from the server.
+</p>
+
+					<p>The enum base type is
+						<code class="prettyprint lang-d"><code class="prettyprint lang-d">int</code></code>
+.
+					</p>
+					<section>
+						<h3>Enum members</h3>
+						<table>
+							<col class="caption"/>
+							<tr>
+								<th>Name</th>
+								<th>Description</th>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.ERR_BADMASK.html">
+										<code>ERR_BADMASK</code>
+									</a>
+								</td>
+								<td>        Reply when sending a message to a mask but the mask is invalid.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.ERR_CANNOTSENDTOCHAN.html">
+										<code>ERR_CANNOTSENDTOCHAN</code>
+									</a>
+								</td>
+								<td>        Reply to a PRIVMSG command on a channel when the message cannot be sent because the user lacks permissions.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.ERR_ERRONEUSNICKNAME.html">
+										<code>ERR_ERRONEUSNICKNAME</code>
+									</a>
+								</td>
+								<td>        Reply to NICK command when the new nickname is invalid.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.ERR_FILEERROR.html">
+										<code>ERR_FILEERROR</code>
+									</a>
+								</td>
+								<td>        Sent when a command fails due to a file operation error.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.ERR_NICKCOLLISION.html">
+										<code>ERR_NICKCOLLISION</code>
+									</a>
+								</td>
+								<td>        Sent when a nickname collision is detected, presumably after recovery from a netsplit.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.ERR_NICKNAMEINUSE.html">
+										<code>ERR_NICKNAMEINUSE</code>
+									</a>
+								</td>
+								<td>        Reply to NICK command when the given nickname is already in use.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.ERR_NOADMININFO.html">
+										<code>ERR_NOADMININFO</code>
+									</a>
+								</td>
+								<td>        Reply to ADMIN command when there is no administrator information available.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.ERR_NOMOTD.html">
+										<code>ERR_NOMOTD</code>
+									</a>
+								</td>
+								<td>        Sent when the server does not have a MOTD.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.ERR_NONICKNAMEGIVEN.html">
+										<code>ERR_NONICKNAMEGIVEN</code>
+									</a>
+								</td>
+								<td>        Reply to NICK command when no nick is given.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.ERR_NOORIGIN.html">
+										<code>ERR_NOORIGIN</code>
+									</a>
+								</td>
+								<td>        Reply to a PING or PONG command which is missing the originator parameter.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.ERR_NORECIPIENT.html">
+										<code>ERR_NORECIPIENT</code>
+									</a>
+								</td>
+								<td>        Reply to a command which expects a recipient but was given none.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.ERR_NOSUCHCHANNEL.html">
+										<code>ERR_NOSUCHCHANNEL</code>
+									</a>
+								</td>
+								<td>        Reply to a command on a channel when that channel does not exist.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.ERR_NOSUCHNICK.html">
+										<code>ERR_NOSUCHNICK</code>
+									</a>
+								</td>
+								<td>        Reply to a command on a user when that user does not exist.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.ERR_NOSUCHSERVER.html">
+										<code>ERR_NOSUCHSERVER</code>
+									</a>
+								</td>
+								<td>        Reply to a command on a server when that server does not exist.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.ERR_NOSUCHSERVICE.html">
+										<code>ERR_NOSUCHSERVICE</code>
+									</a>
+								</td>
+								<td>        Reply to a SQUERY command on a service which does not exist.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.ERR_NOTEXTTOSEND.html">
+										<code>ERR_NOTEXTTOSEND</code>
+									</a>
+								</td>
+								<td>        Reply to a command which expects a message body but was given none.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.ERR_NOTOPLEVEL.html">
+										<code>ERR_NOTOPLEVEL</code>
+									</a>
+								</td>
+								<td>        Reply when sending a message to a mask but no top-level domain is given for the mask.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.ERR_TOOMANYCHANNELS.html">
+										<code>ERR_TOOMANYCHANNELS</code>
+									</a>
+								</td>
+								<td>        Reply to JOIN command when the user has already joined too many channels.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.ERR_TOOMANYTARGETS.html">
+										<code>ERR_TOOMANYTARGETS</code>
+									</a>
+								</td>
+								<td>        Reply to a command where the given targets are ambiguous.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.ERR_UNKNOWNCOMMAND.html">
+										<code>ERR_UNKNOWNCOMMAND</code>
+									</a>
+								</td>
+								<td>        Reply to a command which does not exist.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.ERR_WASNOSUCHNICK.html">
+										<code>ERR_WASNOSUCHNICK</code>
+									</a>
+								</td>
+								<td>        Reply to WHOWAS command indicating there is no history for the given nick.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.ERR_WILDTOPLEVEL.html">
+										<code>ERR_WILDTOPLEVEL</code>
+									</a>
+								</td>
+								<td>        Reply when sending a message to a mask but a wildcard is given for the mask's top-level domain.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_ADMINEMAIL.html">
+										<code>RPL_ADMINEMAIL</code>
+									</a>
+								</td>
+								<td>        Reply to ADMIN command, third and final line, typically listing the server administrator's email.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_ADMINLOC1.html">
+										<code>RPL_ADMINLOC1</code>
+									</a>
+								</td>
+								<td>        Reply to ADMIN command, first line.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_ADMINLOC2.html">
+										<code>RPL_ADMINLOC2</code>
+									</a>
+								</td>
+								<td>        Reply to ADMIN command, second line.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_ADMINME.html">
+										<code>RPL_ADMINME</code>
+									</a>
+								</td>
+								<td>        Start of reply to ADMIN command.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_AWAY.html">
+										<code>RPL_AWAY</code>
+									</a>
+								</td>
+								<td>        Reply from a command directed at a user who is marked as away.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_BANLIST.html">
+										<code>RPL_BANLIST</code>
+									</a>
+								</td>
+								<td>        A single listing of a ban mask for a channel.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_BOUNCE.html">
+										<code>RPL_BOUNCE</code>
+									</a>
+								</td>
+								<td>        Sent when the connection is refused, suggesting an alternate server.
+        This is often used when the connection is refused because the server is already full.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_CHANNELMODEIS.html">
+										<code>RPL_CHANNELMODEIS</code>
+									</a>
+								</td>
+								<td>        Reply to a MODE command on a channel which does not change any modes.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_CREATED.html">
+										<code>RPL_CREATED</code>
+									</a>
+								</td>
+								<td>        Sent after successfully logging in to the server.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_ENDOFBANLIST.html">
+										<code>RPL_ENDOFBANLIST</code>
+									</a>
+								</td>
+								<td>        End of <a href="../../vibeirc/constants/Numeric.RPL_BANLIST.html"><code class="prettyprint lang-d">RPL_BANLIST</code></a> replies.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_ENDOFEXCEPTLIST.html">
+										<code>RPL_ENDOFEXCEPTLIST</code>
+									</a>
+								</td>
+								<td>        End of <a href="../../vibeirc/constants/Numeric.RPL_EXCEPTLIST.html"><code class="prettyprint lang-d">RPL_EXCEPTLIST</code></a> replies.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_ENDOFINFO.html">
+										<code>RPL_ENDOFINFO</code>
+									</a>
+								</td>
+								<td>        End of replies to INFO command.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_ENDOFINVITELIST.html">
+										<code>RPL_ENDOFINVITELIST</code>
+									</a>
+								</td>
+								<td>        End of <a href="../../vibeirc/constants/Numeric.RPL_INVITELIST.html"><code class="prettyprint lang-d">RPL_INVITELIST</code></a> replies.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_ENDOFLINKS.html">
+										<code>RPL_ENDOFLINKS</code>
+									</a>
+								</td>
+								<td>        End of replies to LINKS command.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_ENDOFMOTD.html">
+										<code>RPL_ENDOFMOTD</code>
+									</a>
+								</td>
+								<td>        End of the MOTD.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_ENDOFNAMES.html">
+										<code>RPL_ENDOFNAMES</code>
+									</a>
+								</td>
+								<td>        End of replies to NAMES command.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_ENDOFSTATS.html">
+										<code>RPL_ENDOFSTATS</code>
+									</a>
+								</td>
+								<td>        End of replies to STATS command.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_ENDOFUSERS.html">
+										<code>RPL_ENDOFUSERS</code>
+									</a>
+								</td>
+								<td>        End of replies to USERS command.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_ENDOFWHO.html">
+										<code>RPL_ENDOFWHO</code>
+									</a>
+								</td>
+								<td>        End of replies to WHO command.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_ENDOFWHOIS.html">
+										<code>RPL_ENDOFWHOIS</code>
+									</a>
+								</td>
+								<td>        End of replies to WHOIS command.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_ENDOFWHOWAS.html">
+										<code>RPL_ENDOFWHOWAS</code>
+									</a>
+								</td>
+								<td>        End of replies to WHOWAS.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_EXCEPTLIST.html">
+										<code>RPL_EXCEPTLIST</code>
+									</a>
+								</td>
+								<td>        A single listing of an exception mask for a channel.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_INFO.html">
+										<code>RPL_INFO</code>
+									</a>
+								</td>
+								<td>        Reply to INFO command.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_INVITELIST.html">
+										<code>RPL_INVITELIST</code>
+									</a>
+								</td>
+								<td>        A single listing of an invitation mask for a channel.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_INVITING.html">
+										<code>RPL_INVITING</code>
+									</a>
+								</td>
+								<td>        Reply to successful INVITE command.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_ISON.html">
+										<code>RPL_ISON</code>
+									</a>
+								</td>
+								<td>        Reply format used by ISON to list replies to the query list.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_LINKS.html">
+										<code>RPL_LINKS</code>
+									</a>
+								</td>
+								<td>        Reply to LINKS command.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_LIST.html">
+										<code>RPL_LIST</code>
+									</a>
+								</td>
+								<td>        Reply to LIST containing a single channel.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_LISTEND.html">
+										<code>RPL_LISTEND</code>
+									</a>
+								</td>
+								<td>        End of replies to LIST.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_LISTSTART.html">
+										<code>RPL_LISTSTART</code>
+									</a>
+								</td>
+								<td>        Deprecated. Formerly indicated the start of a response to LIST command.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_LUSERCHANNELS.html">
+										<code>RPL_LUSERCHANNELS</code>
+									</a>
+								</td>
+								<td>        Reply to LUSERS command specifying the number of channels across the network.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_LUSERCLIENT.html">
+										<code>RPL_LUSERCLIENT</code>
+									</a>
+								</td>
+								<td>        Reply to LUSERS command specifying the number of users logged in across the network.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_LUSERME.html">
+										<code>RPL_LUSERME</code>
+									</a>
+								</td>
+								<td>        Reply to LUSERS command specifying the number of users and links on the local server.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_LUSEROP.html">
+										<code>RPL_LUSEROP</code>
+									</a>
+								</td>
+								<td>        Reply to LUSERS command specifying the number of operators logged in across the network.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_LUSERUNKNOWN.html">
+										<code>RPL_LUSERUNKNOWN</code>
+									</a>
+								</td>
+								<td>        Reply to LUSERS command specifying the number of unknown connections.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_MOTD.html">
+										<code>RPL_MOTD</code>
+									</a>
+								</td>
+								<td>        A line of the MOTD.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_MOTDSTART.html">
+										<code>RPL_MOTDSTART</code>
+									</a>
+								</td>
+								<td>        Sent at the start of MOTD transmission.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_MYINFO.html">
+										<code>RPL_MYINFO</code>
+									</a>
+								</td>
+								<td>        Sent after successfully logging in to the server.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_NAMREPLY.html">
+										<code>RPL_NAMREPLY</code>
+									</a>
+								</td>
+								<td>        Reply to NAMES command.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_NOTOPIC.html">
+										<code>RPL_NOTOPIC</code>
+									</a>
+								</td>
+								<td>        Reply to TOPIC if no topic is set.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_NOUSERS.html">
+										<code>RPL_NOUSERS</code>
+									</a>
+								</td>
+								<td>        Reply to USERS if there are no users.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_NOWAWAY.html">
+										<code>RPL_NOWAWAY</code>
+									</a>
+								</td>
+								<td>        Reply from AWAY when marked as away.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_REHASHING.html">
+										<code>RPL_REHASHING</code>
+									</a>
+								</td>
+								<td>        Reply to a successful REHASH command.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_STATSCLINE.html">
+										<code>RPL_STATSCLINE</code>
+									</a>
+								</td>
+								<td>        Reply to STATS command listing the specified server's C-lines.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_STATSCOMMANDS.html">
+										<code>RPL_STATSCOMMANDS</code>
+									</a>
+								</td>
+								<td>        Reply to STATS command with information about the specified server's commands.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_STATSHLINE.html">
+										<code>RPL_STATSHLINE</code>
+									</a>
+								</td>
+								<td>        Reply to STATS command listing the specified server's H-lines.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_STATSILINE.html">
+										<code>RPL_STATSILINE</code>
+									</a>
+								</td>
+								<td>        Reply to STATS command listing the specified server's I-lines.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_STATSKLINE.html">
+										<code>RPL_STATSKLINE</code>
+									</a>
+								</td>
+								<td>        Reply to STATS command listing the specified server's K-lines.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_STATSLINKINFO.html">
+										<code>RPL_STATSLINKINFO</code>
+									</a>
+								</td>
+								<td>        Reply to STATS command with information about the specified server's links.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_STATSLLINE.html">
+										<code>RPL_STATSLLINE</code>
+									</a>
+								</td>
+								<td>        Reply to STATS command listing the specified server's L-lines.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_STATSNLINE.html">
+										<code>RPL_STATSNLINE</code>
+									</a>
+								</td>
+								<td>        Reply to STATS command listing the specified server's N-lines.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_STATSOLINE.html">
+										<code>RPL_STATSOLINE</code>
+									</a>
+								</td>
+								<td>        Reply to STATS command listing the specified server's O-lines.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_STATSUPTIME.html">
+										<code>RPL_STATSUPTIME</code>
+									</a>
+								</td>
+								<td>        Reply to STATS command with information about the specified server's uptime.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_STATSYLINE.html">
+										<code>RPL_STATSYLINE</code>
+									</a>
+								</td>
+								<td>        Reply to STATS command listing the specified server's Y-lines.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_SUMMONING.html">
+										<code>RPL_SUMMONING</code>
+									</a>
+								</td>
+								<td>        Reply to successful SUMMON command.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_TIME.html">
+										<code>RPL_TIME</code>
+									</a>
+								</td>
+								<td>        Reply to TIME command.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_TOPIC.html">
+										<code>RPL_TOPIC</code>
+									</a>
+								</td>
+								<td>        Reply to TOPIC if a topic is set.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_TRACECLASS.html">
+										<code>RPL_TRACECLASS</code>
+									</a>
+								</td>
+								<td>        Reply to TRACE command. Unknown meaning.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_TRACECONNECTING.html">
+										<code>RPL_TRACECONNECTING</code>
+									</a>
+								</td>
+								<td>        Reply to TRACE command indicating a server which has not yet been connected to.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_TRACEEND.html">
+										<code>RPL_TRACEEND</code>
+									</a>
+								</td>
+								<td>        End of replies to TRACE command.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_TRACEHANDSHAKE.html">
+										<code>RPL_TRACEHANDSHAKE</code>
+									</a>
+								</td>
+								<td>        Reply to TRACE command indicating a server which is still completing the server-to-server handshake.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_TRACELINK.html">
+										<code>RPL_TRACELINK</code>
+									</a>
+								</td>
+								<td>        The RPL_TRACE* are all returned by the server in response to the TRACE message.
+        How many are returned is dependent on the TRACE message and whether it was sent by an operator or not.
+        There is no predefined order for which occurs first.
+        Replies <a href="../../vibeirc/constants/Numeric.RPL_TRACEUNKNOWN.html"><code class="prettyprint lang-d">RPL_TRACEUNKNOWN</code></a>, <a href="../../vibeirc/constants/Numeric.RPL_TRACECONNECTING.html"><code class="prettyprint lang-d">RPL_TRACECONNECTING</code></a> and <a href="../../vibeirc/constants/Numeric.RPL_TRACEHANDSHAKE.html"><code class="prettyprint lang-d">RPL_TRACEHANDSHAKE</code></a> are all used for connections
+        which have not been fully established and are either unknown,
+        still attempting to connect or in the process of completing the 'server handshake'.
+        <code class="prettyprint lang-d">RPL_TRACELINK</code> is sent by any server which handlesa TRACE message and has to pass it on to another server.
+        The list of RPL_TRACELINKs sent in response to a TRACE command traversing the IRC network
+        should reflect the actual connectivity ofthe servers themselves along that path.
+        <a href="../../vibeirc/constants/Numeric.RPL_TRACENEWTYPE.html"><code class="prettyprint lang-d">RPL_TRACENEWTYPE</code></a> is to be used for any connection which does not fit in the other categories
+        but is being displayed anyway.
+        <a href="../../vibeirc/constants/Numeric.RPL_TRACEEND.html"><code class="prettyprint lang-d">RPL_TRACEEND</code></a> is sent to indicate the end of the list.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_TRACELOG.html">
+										<code>RPL_TRACELOG</code>
+									</a>
+								</td>
+								<td>        Reply to TRACE command. Unknown meaning.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_TRACENEWTYPE.html">
+										<code>RPL_TRACENEWTYPE</code>
+									</a>
+								</td>
+								<td>        Reply to TRACE command, indicates a connection of some sort which does not fit any of the other RPL_TRACE* replies.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_TRACEOPERATOR.html">
+										<code>RPL_TRACEOPERATOR</code>
+									</a>
+								</td>
+								<td>        Reply to TRACE command upon a user, indicates that the specified user is an operator.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_TRACESERVER.html">
+										<code>RPL_TRACESERVER</code>
+									</a>
+								</td>
+								<td>        Reply to TRACE command upon a server, with details about the specified server.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_TRACESERVICE.html">
+										<code>RPL_TRACESERVICE</code>
+									</a>
+								</td>
+								<td>        Reply to TRACE command upon a user, indicates that the specified user is a service.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_TRACEUNKNOWN.html">
+										<code>RPL_TRACEUNKNOWN</code>
+									</a>
+								</td>
+								<td>        Reply to TRACE command indicating a server which is in an unknown state.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_TRACEUSER.html">
+										<code>RPL_TRACEUSER</code>
+									</a>
+								</td>
+								<td>        Reply to TRACE command upon a user.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_TRYAGAIN.html">
+										<code>RPL_TRYAGAIN</code>
+									</a>
+								</td>
+								<td>        Reply to a command which was dropped, requesting the client to try the command again.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_UMODEIS.html">
+										<code>RPL_UMODEIS</code>
+									</a>
+								</td>
+								<td>        Reply to MODE command on a user, listing their modes.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_UNAWAY.html">
+										<code>RPL_UNAWAY</code>
+									</a>
+								</td>
+								<td>        Reply from AWAY command when no longer marked as away.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_USERHOST.html">
+										<code>RPL_USERHOST</code>
+									</a>
+								</td>
+								<td>        Reply format used by USERHOST to list replies to the query list.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_USERS.html">
+										<code>RPL_USERS</code>
+									</a>
+								</td>
+								<td>        Reply to USERS command.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_USERSSTART.html">
+										<code>RPL_USERSSTART</code>
+									</a>
+								</td>
+								<td>        Start of replies to USERS command.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_VERSION.html">
+										<code>RPL_VERSION</code>
+									</a>
+								</td>
+								<td>        Reply to VERSION command.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_WELCOME.html">
+										<code>RPL_WELCOME</code>
+									</a>
+								</td>
+								<td>        Sent after successfully logging in to the server.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_WHOISCHANNELS.html">
+										<code>RPL_WHOISCHANNELS</code>
+									</a>
+								</td>
+								<td>        Reply to WHOIS listing the channels the user has joined.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_WHOISIDLE.html">
+										<code>RPL_WHOISIDLE</code>
+									</a>
+								</td>
+								<td>        Reply to WHOIS with information about the user's idle status.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_WHOISOPERATOR.html">
+										<code>RPL_WHOISOPERATOR</code>
+									</a>
+								</td>
+								<td>        Reply to WHOIS indicating the operator status of the user.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_WHOISSERVER.html">
+										<code>RPL_WHOISSERVER</code>
+									</a>
+								</td>
+								<td>        Reply to WHOIS with information about the server the user is connected to.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_WHOISUSER.html">
+										<code>RPL_WHOISUSER</code>
+									</a>
+								</td>
+								<td>        Reply to WHOIS with information about the user.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_WHOREPLY.html">
+										<code>RPL_WHOREPLY</code>
+									</a>
+								</td>
+								<td>        Reply to WHO command.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_WHOWASUSER.html">
+										<code>RPL_WHOWASUSER</code>
+									</a>
+								</td>
+								<td>        Reply to WHOWAS with information about the user.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_YOUREOPER.html">
+										<code>RPL_YOUREOPER</code>
+									</a>
+								</td>
+								<td>        Reply to a successful OPER command.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_YOURESERVICE.html">
+										<code>RPL_YOURESERVICE</code>
+									</a>
+								</td>
+								<td>        Reply received upon successfully registering as a service.
+</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="../../vibeirc/constants/Numeric.RPL_YOURHOST.html">
+										<code>RPL_YOURHOST</code>
+									</a>
+								</td>
+								<td>        Sent after successfully logging in to the server.
+</td>
+							</tr>
+						</table>
+					</section>
+
+			</section>
+			<section>
+				<h2>Authors</h2>
+
+			</section>
+			<section>
+				<h2>Copyright</h2>
+
+			</section>
+			<section>
+				<h2>License</h2>
+
+			</section>
+		</div>
+	</body>
+</html>
