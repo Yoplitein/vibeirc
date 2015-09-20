@@ -41,7 +41,7 @@ shared static this()
 ```
 
 ###More complete example
-See [example/](blob/master/example/src/app.d)
+See [example/src/app.d](example/src/app.d)
 
 ##License
 vibeirc is available under the terms of the BSD 2-clause license. See [LICENSE](LICENSE) for details.

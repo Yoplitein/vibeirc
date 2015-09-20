@@ -1,6 +1,6 @@
 {
     "name": "vibeirc",
-    "description": "An IRC module for vibe.d",
+    "description": "An IRC client for vibe.d",
     "copyright": "Copyright © 2014, Steven \"Yoplitein\" Dwy",
     "license": "BSD 2-Clause",
     "authors": ["Yoplitein"],
