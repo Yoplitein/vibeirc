@@ -2,6 +2,7 @@
 module vibeirc.client;
 
 import std.datetime;
+import std.traits;
 
 import vibe.core.log;
 import vibe.core.net;
@@ -456,7 +457,7 @@ final class IRCClient
             }
         }
         
-        disconnected(disconnectReason);
+        runCallback(disconnected, disconnectReason);
         version(IrcDebugLogging) logDebug("irc disconnected");
     }
     
@@ -507,33 +508,33 @@ final class IRCClient
                 }
                 
                 if(command == "NOTICE")
-                    notice(msg);
+                    runCallback(notice, msg);
                 else
-                    privmsg(msg);
+                    runCallback(privmsg, msg);
                 
                 break;
             case "JOIN":
-                userJoined(prefix.splitUserinfo, parts[0].dropFirst);
+                runCallback(userJoined, prefix.splitUserinfo, parts[0].dropFirst);
                 
                 break;
             case "PART":
-                userLeft(prefix.splitUserinfo, parts[0], parts.dropFirst.join.dropFirst);
+                runCallback(userLeft, prefix.splitUserinfo, parts[0], parts.dropFirst.join.dropFirst);
                 
                 break;
             case "QUIT":
-                userQuit(prefix.splitUserinfo, parts.join.dropFirst);
+                runCallback(userQuit, prefix.splitUserinfo, parts.join.dropFirst);
                 
                 break;
             case "NICK":
-                userRenamed(prefix.splitUserinfo, parts[0].dropFirst);
+                runCallback(userRenamed, prefix.splitUserinfo, parts[0].dropFirst);
                 
                 break;
             case "KICK":
-                userKicked(prefix.splitUserinfo, parts[1], parts[0], parts[2 .. $].join.dropFirst);
+                runCallback(userKicked, prefix.splitUserinfo, parts[1], parts[0], parts[2 .. $].join.dropFirst);
                 
                 break;
             default:
-                unknownCommand(prefix, command, parts);
+                runCallback(unknownCommand, prefix, command, parts);
         }
     }
     
@@ -552,7 +553,7 @@ final class IRCClient
             case Numeric.ERR_NICKNAMEINUSE:
                 throw new GracelessDisconnect("Nickname already in use"); //TODO: handle gracefully?
             default:
-                unknownNumeric(prefix, id, parts);
+                runCallback(unknownNumeric, prefix, id, parts);
         }
     }
     
@@ -610,6 +611,30 @@ final class IRCClient
         update_time;
         
         version(IrcDebugLogging) logDebug("irc flushMessageBuffer: sent %s this loop", currentSend);
+    }
+    
+    private auto runCallback(CallbackType, Args...)(CallbackType callback, Args args)
+    {
+        static assert(
+            isCallable!callback,
+            "runCallback passed a non-delegate: " ~ CallbackType.stringof
+        );
+        static assert(
+            __traits(compiles, callback(args)),
+            "Cannot call " ~ CallbackType.stringof ~ " with types " ~ Args.stringof
+        );
+        
+        if(callback !is null)
+            return callback(args);
+        else
+        {
+            alias returnType = ReturnType!callback;
+            
+            static if(is(returnType == void))
+                return;
+            else
+                return returnType.init;
+        }
     }
     
     /++
