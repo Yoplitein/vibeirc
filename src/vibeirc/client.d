@@ -491,7 +491,7 @@ final class IRCClient
             sendLine("USER %s 0 * :%s", username, realname);
         }
         
-        while(transport.connected)
+        while(true)
         {
             string line;
             
@@ -509,6 +509,9 @@ final class IRCClient
             
             if(line == null)
             {
+                if(!transport.connected) //reading final lines
+                    break;
+                
                 sleep(sleepTimeout);
                 
                 continue;
@@ -522,7 +525,8 @@ final class IRCClient
             {
                 disconnectReason = err.msg;
                 
-                transport.close;
+                if(transport.connected)
+                    transport.close;
             }
         }
         
