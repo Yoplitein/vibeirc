@@ -60,10 +60,12 @@ final class IRCClient
      *======================================*
      *======================================*/
     
-    private string _nickname;
+    private string _nickname = "vibeirc";
     
     /++
         The display name this client will use.
+        
+        Defaults to vibeirc.
     +/
     @property string nickname()
     {
@@ -85,6 +87,8 @@ final class IRCClient
     
     /++
         The username shown by the WHOIS command.
+        
+        Defaults to vibeirc.
     +/
     @property string username()
     {
@@ -103,6 +107,8 @@ final class IRCClient
     
     /++
         The real name shown by the WHOIS command.
+        
+        Defaults to vibeirc.
     +/
     @property string realname()
     {
