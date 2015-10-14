@@ -45,9 +45,10 @@
 <url><loc>http://127.0.0.1/vibeirc/client/IRCClient.realname.html</loc></url>
 <url><loc>http://127.0.0.1/vibeirc/client/IRCClient.send.html</loc></url>
 <url><loc>http://127.0.0.1/vibeirc/client/IRCClient.sendLine.html</loc></url>
+<url><loc>http://127.0.0.1/vibeirc/client/IRCClient.serverHostname.html</loc></url>
+<url><loc>http://127.0.0.1/vibeirc/client/IRCClient.serverHostname.html</loc></url>
 <url><loc>http://127.0.0.1/vibeirc/client/IRCClient.sleepTimeout.html</loc></url>
 <url><loc>http://127.0.0.1/vibeirc/client/IRCClient.sleepTimeout.html</loc></url>
-<url><loc>http://127.0.0.1/vibeirc/client/IRCClient.this.html</loc></url>
 <url><loc>http://127.0.0.1/vibeirc/client/IRCClient.username.html</loc></url>
 <url><loc>http://127.0.0.1/vibeirc/client/IRCClient.username.html</loc></url>
 <url><loc>http://127.0.0.1/vibeirc/client/PerformLogin.html</loc></url>

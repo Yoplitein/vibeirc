@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8"/>
-		<title>Function IRCClient.username</title>
+		<title>Function IRCClient.serverHostname</title>
 		<link rel="stylesheet" type="text/css" href="../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../scripts/jquery.js">/**/</script>
@@ -46,21 +46,17 @@ $('#symbolSearchPane').show();
 				</div>
 		</nav>
 		<div id="main-contents">
-			<h1>Function IRCClient.username</h1>
+			<h1>Function IRCClient.serverHostname</h1>
 			<section>
-				<p>        The <code class="prettyprint lang-d">username</code> shown by the WHOIS command.
+				<p>        The hostname of the server this client is <a href="../../vibeirc/client/IRCClient.connected.html"><code class="prettyprint lang-d">connected</code></a> to.
 </p>
-<section>
-<p>        Defaults to vibeirc.
-</p>
-</section>
 
 					<section>
 						<h3>Prototypes</h3>
 						<pre class="code prettyprint lang-d prototype">
-string username() @property;
+string serverHostname() @property;
 
-string username(
+string serverHostname(
 &nbsp;&nbsp;string newValue
 ) @property;</pre>
 					</section>
