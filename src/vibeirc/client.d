@@ -774,7 +774,7 @@ final class IRCClient
     private void checkPingTime()
     {
         //how long to wait before sending a PING
-        static const timeUntilSendPing = 1.minute;
+        static const timeUntilSendPing = 1.minutes;
         //how long to wait after sending PING before considering the connection closed
         static const timeUntilErroring = 15.seconds;
         auto now = Clock.currTime;
