@@ -2,6 +2,7 @@
 module vibeirc.client;
 
 import std.datetime;
+import std.string;
 import std.traits;
 
 import vibe.core.log;
@@ -510,8 +511,6 @@ final class IRCClient
         import vibe.core.log: logError;
         import vibe.core.core: sleep;
         
-        string disconnectReason = "Connection terminated gracefully";
-        
         version(IrcDebugLogging) logDebug("irc connected");
         
         if(runCallback(onConnect) == PerformLogin.yes)
@@ -550,28 +549,17 @@ final class IRCClient
             }
             
             version(IrcDebugLogging) logDebug("irc recv: %s", line);
-            
-            try
-                lineReceived(line);
-            catch(GracelessDisconnect err)
-            {
-                disconnectReason = err.msg;
-                
-                if(connected)
-                    transport.close;
-            }
+            lineReceived(line);
         }
         
         loggedIn = false;
         
-        runCallback(onDisconnect, disconnectReason);
         version(IrcDebugLogging) logDebug("irc disconnected");
     }
     
     private void lineReceived(string line)
     {
         import std.conv: ConvException, to;
-        import std.string: split;
         
         string[] parts = line.split(" ");
         
@@ -776,11 +764,29 @@ final class IRCClient
         if(connected)
             throw new Exception("Already connected!");
         
-        transport = connectTCP(host, port);
+        string disconnectReason = "Connection terminated gracefully";
         protocolTask = runTask(
             {
                 version(IrcDebugLogging) logDebug("Starting protocol loop");
-                protocolLoop(password);
+                
+                try
+                {
+                    transport = connectTCP(host, port);
+                    
+                    protocolLoop(password);
+                }
+                catch(Exception err)
+                {
+                    if(cast(GracelessDisconnect)err)
+                        disconnectReason = err.msg;
+                    else
+                        disconnectReason = "%s: %s".format(typeid(err).name, err.msg);
+                    
+                    if(connected)
+                        transport.close;
+                }
+                
+                runCallback(onDisconnect, disconnectReason);
             }
         );
     }
@@ -811,8 +817,6 @@ final class IRCClient
     in { assert(connected); }
     body
     {
-        import std.string: format;
-        
         contents = contents.format(args);
         
         if(buffering)
@@ -834,8 +838,6 @@ final class IRCClient
     +/
     void send(string destination, string message, bool notice = false)
     {
-        import std.string: split;
-        
         foreach(line; message.split("\n"))
             sendLine("%s %s :%s", notice ? "NOTICE" : "PRIVMSG", destination, line);
     }
