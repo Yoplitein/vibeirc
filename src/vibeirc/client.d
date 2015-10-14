@@ -50,12 +50,9 @@ final class IRCClient
     private string[] buffer; //Buffered messages
     private uint bufferSent = 0; //Number of messages sent this time period
     private SysTime bufferNextTime; //The start of the next time period
-    
-    ///
-    this()
-    {
-        bufferNextTime = SysTime(0L);
-    }
+    private SysTime lastPingTime; //When we last received a PING or a PONG from the server
+    private bool sentPing = false; //Whether we sent a PING
+    private bool receivedPong = false; //Whether the server has answered our PING
     
     /*======================================*
      *======================================*
@@ -228,6 +225,24 @@ final class IRCClient
     @property bool loggedIn(bool newValue)
     {
         return _loggedIn = newValue;
+    }
+    
+    private string _serverHostname;
+    
+    /++
+        The hostname of the server this client is connected to.
+    +/
+    @property string serverHostname()
+    {
+        return _serverHostname;
+    }
+    
+    /++
+        ditto
+    +/
+    @property string serverHostname(string newValue)
+    {
+        return _serverHostname = newValue;
     }
     
     /*======================================*
@@ -531,6 +546,8 @@ final class IRCClient
             if(buffering)
                 flushMessageBuffer;
             
+            checkPingTime;
+            
             try
                 line = transport.tryReadLine;
             catch(Exception err)
@@ -565,9 +582,13 @@ final class IRCClient
         
         string[] parts = line.split(" ");
         
+        //commands of the form `CMD :data` are handled here
+        //handleCommand and handleNumeric are for `:origin CMD :data`
         switch(parts[0])
         {
             case "PING":
+                lastPingTime = Clock.currTime;
+                
                 sendLine("PONG %s", parts[1]);
                 
                 break;
@@ -630,6 +651,11 @@ final class IRCClient
                 runCallback(onUserKick, prefix.splitUserinfo, parts[1], parts[0], parts[2 .. $].join.dropFirst);
                 
                 break;
+            case "PONG":
+                receivedPong = true;
+                lastPingTime = Clock.currTime;
+                
+                break;
             default:
                 runCallback(onUnknownCommand, prefix, command, parts);
         }
@@ -645,6 +671,7 @@ final class IRCClient
                 version(IrcDebugLogging) logDebug("irc logged in");
                 
                 loggedIn = true;
+                serverHostname = prefix;
                 
                 runCallback(onLogin);
                 
@@ -744,6 +771,39 @@ final class IRCClient
         }
     }
     
+    private void checkPingTime()
+    {
+        //how long to wait before sending a PING
+        static const timeUntilSendPing = 1.minute;
+        //how long to wait after sending PING before considering the connection closed
+        static const timeUntilErroring = 15.seconds;
+        auto now = Clock.currTime;
+        auto nextPing = lastPingTime + timeUntilSendPing;
+        
+        if(now < nextPing)
+            return;
+        
+        if(sentPing)
+        {
+            if(receivedPong)
+            {
+                receivedPong = false;
+                sentPing = false;
+                
+                return;
+            }
+            
+            if(now < nextPing + timeUntilErroring)
+                return;
+            
+            throw new GracelessDisconnect("Connection timed out");
+        }
+        
+        sendLine("PING :%s", serverHostname);
+        
+        sentPing = true;
+    }
+    
     /*======================================*
      *======================================*
      *            Public Methods            *
@@ -767,6 +827,8 @@ final class IRCClient
             throw new Exception("Already connected!");
         
         string disconnectReason = "Connection terminated gracefully";
+        bufferNextTime = Clock.currTime;
+        lastPingTime = Clock.currTime;
         protocolTask = runTask(
             {
                 version(IrcDebugLogging) logDebug("Starting protocol loop");
