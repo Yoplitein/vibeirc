@@ -2,7 +2,6 @@
 module vibeirc.client;
 
 import std.datetime;
-import std.string;
 import std.traits;
 
 import vibe.core.log;
@@ -43,6 +42,9 @@ enum PerformLogin
 +/
 final class IRCClient
 {
+    //placed here to prevent symbols leaking into user code
+    import std.string: format, split;
+    
     private Task protocolTask; //The task running protocolLoop
     private TCPConnection transport; //The TCP socket
     private string[] buffer; //Buffered messages
