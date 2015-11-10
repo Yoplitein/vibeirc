@@ -50,7 +50,7 @@ final class IRCClient
     private string[] buffer; //Buffered messages
     private uint bufferSent = 0; //Number of messages sent this time period
     private SysTime bufferNextTime; //The start of the next time period
-    private SysTime lastPingTime; //When we last received a PING or a PONG from the server
+    private SysTime lastIncomingLineTime; //When we last received a line from the server
     private bool sentPing = false; //Whether we sent a PING
     private bool receivedPong = false; //Whether the server has answered our PING
     
@@ -580,6 +580,7 @@ final class IRCClient
     {
         import std.conv: ConvException, to;
         
+        lastIncomingLineTime = Clock.currTime;
         string[] parts = line.split(" ");
         
         //commands of the form `CMD :data` are handled here
@@ -587,8 +588,6 @@ final class IRCClient
         switch(parts[0])
         {
             case "PING":
-                lastPingTime = Clock.currTime;
-                
                 sendLine("PONG %s", parts[1]);
                 
                 break;
@@ -653,7 +652,6 @@ final class IRCClient
                 break;
             case "PONG":
                 receivedPong = true;
-                lastPingTime = Clock.currTime;
                 
                 break;
             default:
@@ -778,7 +776,7 @@ final class IRCClient
         //how long to wait after sending PING before considering the connection closed
         static const timeUntilErroring = 15.seconds;
         auto now = Clock.currTime;
-        auto nextPing = lastPingTime + timeUntilSendPing;
+        auto nextPing = lastIncomingLineTime + timeUntilSendPing;
         
         if(receivedPong)
         {
@@ -828,7 +826,7 @@ final class IRCClient
         
         string disconnectReason = "Connection terminated gracefully";
         bufferNextTime = Clock.currTime;
-        lastPingTime = Clock.currTime;
+        lastIncomingLineTime = Clock.currTime;
         protocolTask = runTask(
             {
                 version(IrcDebugLogging) logDebug("Starting protocol loop");
