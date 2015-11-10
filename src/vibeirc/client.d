@@ -780,19 +780,19 @@ final class IRCClient
         auto now = Clock.currTime;
         auto nextPing = lastPingTime + timeUntilSendPing;
         
+        if(receivedPong)
+        {
+            receivedPong = false;
+            sentPing = false;
+            
+            return;
+        }
+        
         if(now < nextPing)
             return;
         
         if(sentPing)
         {
-            if(receivedPong)
-            {
-                receivedPong = false;
-                sentPing = false;
-                
-                return;
-            }
-            
             if(now < nextPing + timeUntilErroring)
                 return;
             
