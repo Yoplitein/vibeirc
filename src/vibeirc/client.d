@@ -760,12 +760,10 @@ final class IRCClient
             return callback(args);
         else
         {
-            alias returnType = ReturnType!callback;
-            
-            static if(is(returnType == void))
+            static if(is(ReturnType!callback == void))
                 return;
             else
-                return returnType.init;
+                return ReturnType!callback.init;
         }
     }
     
