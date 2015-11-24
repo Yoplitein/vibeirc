@@ -219,10 +219,7 @@ final class IRCClient
         return _loggedIn;
     }
     
-    /++
-        ditto
-    +/
-    @property bool loggedIn(bool newValue)
+    private @property bool loggedIn(bool newValue)
     {
         return _loggedIn = newValue;
     }
@@ -237,10 +234,7 @@ final class IRCClient
         return _serverHostname;
     }
     
-    /++
-        ditto
-    +/
-    @property string serverHostname(string newValue)
+    private @property string serverHostname(string newValue)
     {
         return _serverHostname = newValue;
     }
