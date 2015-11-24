@@ -48,11 +48,11 @@ final class IRCClient
     private Task protocolTask; //The task running protocolLoop
     private TCPConnection transport; //The TCP socket
     private string[] buffer; //Buffered messages
-    private uint bufferSent = 0; //Number of messages sent this time period
+    private uint bufferSent; //Number of messages sent this time period
     private SysTime bufferNextTime; //The start of the next time period
     private SysTime lastIncomingLineTime; //When we last received a line from the server
-    private bool sentPing = false; //Whether we sent a PING
-    private bool receivedPong = false; //Whether the server has answered our PING
+    private bool sentPing; //Whether we sent a PING
+    private bool receivedPong; //Whether the server has answered our PING
     
     /*======================================*
      *======================================*
@@ -800,6 +800,18 @@ final class IRCClient
         sentPing = true;
     }
     
+    private void resetFields()
+    {
+        protocolTask = Task.init;
+        transport = TCPConnection.init;
+        buffer.length = 0;
+        bufferSent = 0;
+        bufferNextTime = Clock.currTime;
+        lastIncomingLineTime = Clock.currTime;
+        sentPing = false;
+        receivedPong = false;
+    }
+    
     /*======================================*
      *======================================*
      *            Public Methods            *
@@ -822,9 +834,9 @@ final class IRCClient
         if(connected)
             throw new Exception("Already connected!");
         
+        resetFields;
+        
         string disconnectReason = "Connection terminated gracefully";
-        bufferNextTime = Clock.currTime;
-        lastIncomingLineTime = Clock.currTime;
         protocolTask = runTask(
             {
                 version(IrcDebugLogging) logDebug("Starting protocol loop");
