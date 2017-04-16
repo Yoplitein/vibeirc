@@ -1,11 +1,11 @@
-#vibeirc
+# vibeirc
 An IRC module for vibe.d
 
-##Documentation
+## Documentation
 The code is documented via ddoc comments. There is also online documentation available [here](http://yoplitein.github.io/vibeirc/).
 
-##Examples
-###Simple
+## Examples
+### Simple
 ```D
 import std.stdio;
 
@@ -40,11 +40,11 @@ shared static this()
 }
 ```
 
-###More complete example
+### More complete example
 See [example/src/app.d](example/src/app.d)
 
-##License
+## License
 vibeirc is available under the terms of the BSD 2-clause license. See [LICENSE](LICENSE) for details.
 
-##Contributing
+## Contributing
 Pull requests and issue reports are welcome!
