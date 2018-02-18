@@ -6,6 +6,7 @@
     "authors": ["Yoplitein"],
     "targetType": "library",
     "dependencies": {
-        "vibe-d": "~>0.8.0"
+        "vibe-d:core": "~>0.8.0",
+        "vibe-d:stream": "~>0.8.0"
     }
 }
