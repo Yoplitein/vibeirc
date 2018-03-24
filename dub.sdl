@@ -1,0 +1,9 @@
+name "vibeirc"
+description "An IRC client for vibe.d"
+copyright "Copyright © 2014-2018, Steven \"Yoplitein\" Dwy"
+license "BSD 2-Clause"
+authors "Yoplitein"
+targetType "library"
+
+dependency "vibe-d:core" version="~>0.8.0"
+dependency "vibe-d:stream" version="~>0.8.0"
