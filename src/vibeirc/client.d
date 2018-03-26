@@ -541,6 +541,7 @@ final class IRCClient
                 flushMessageBuffer;
             
             checkPingTime;
+            transport.waitForData;
             
             try
                 line = transport.tryReadLine;
