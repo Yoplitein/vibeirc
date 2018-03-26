@@ -179,10 +179,11 @@ package auto join(Array)(Array array)
 }
 
 /+
-    Replacement for vibe.stream.operations.readLine that reads a line now or reads nothing.
+    Wrapper for vibe.stream.operations.readLine that reads a line now or reads nothing.
     Useful as it doesn't lock up the calling fiber.
 +/
-package string tryReadLine(InputStream stream, string terminator = "\r\n")
+package string tryReadLine(Stream)(Stream stream, string terminator = "\r\n")
+if(isInputStream!Stream)
 {
     import vibe.stream.operations: readLine;
     
@@ -201,9 +202,9 @@ package string tryReadLine(InputStream stream, string terminator = "\r\n")
 
 unittest
 {
-    import vibe.stream.memory: MemoryStream;
+    import vibe.stream.memory: createMemoryStream;
     
-    auto buffer = new MemoryStream(cast(ubyte[])"12345678".dup);
+    auto buffer = createMemoryStream(cast(ubyte[])"12345678".dup);
     
     buffer.seek(0);
     buffer.write(cast(ubyte[])"abc");

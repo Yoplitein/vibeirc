@@ -5,5 +5,5 @@ license "BSD 2-Clause"
 authors "Yoplitein"
 targetType "library"
 
-dependency "vibe-d:core" version="~>0.8.0"
-dependency "vibe-d:stream" version="~>0.8.0"
+dependency "vibe-d:core" version="~>0.8.3"
+dependency "vibe-d:stream" version="~>0.8.3"
