@@ -5,225 +5,202 @@
 		<title>Enum Color</title>
 		<link rel="stylesheet" type="text/css" href="../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../prettify/prettify.css" type="text/css"/>
-		<script type="text/javascript" src="../../scripts/jquery.js">/**/</script>
-		<script type="text/javascript" src="../../prettify/prettify.js">/**/</script>
-		<script type="text/javascript" src="../../scripts/ddox.js">/**/</script>
+		<script type="text/javascript" src="../../scripts/jquery.js">/**/</script><script type="text/javascript" src="../../scripts/ddox.js">/**/</script>
 	</head>
-	<body onload="prettyPrint(); setupDdox();">
+	<body onload="setupDdox();">
 		<nav id="main-nav">
-						<ul class="tree-view">
-							<li class=" tree-view">
-								<a href="#" class="package">vibeirc</a>
-						<ul class="tree-view">
-							<li>
-								<a href="../../vibeirc/client.html" class=" module">client</a>
-							</li>
-							<li>
-								<a href="../../vibeirc/constants.html" class="selected module">constants</a>
-							</li>
-							<li>
-								<a href="../../vibeirc/data.html" class=" module">data</a>
-							</li>
-							<li>
-								<a href="../../vibeirc/utility.html" class=" module">utility</a>
-							</li>
-						</ul>
-							</li>
-						</ul>
-				<noscript>
-					<p style="color: red">The search functionality needs JavaScript enabled</p>
-				</noscript>
-				<div id="symbolSearchPane" style="display: none">
-					<p>
-						<input id="symbolSearch" type="text" placeholder="Search for symbols" onchange="performSymbolSearch(24);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"/>
-					</p>
-	<ul id="symbolSearchResults" style="display: none"></ul>
-	<script type="application/javascript" src="../../symbols.js"></script>
-	<script type="application/javascript">
-var symbolSearchRootDir = "../../";
-$('#symbolSearchPane').show();
-	</script>
-				</div>
+			<noscript>
+				<p style="color: red">The search functionality needs JavaScript enabled</p>
+			</noscript>
+			<div id="symbolSearchPane" style="display: none">
+				<form action="#" method="GET">
+					<input id="symbolSearch" type="text" name="q" placeholder="Search for symbols" autocomplete="off" onchange="performSymbolSearch(40);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"/>
+				</form>
+				<ul id="symbolSearchResults" class="symbolList" style="display: none"></ul><script type="application/javascript" src="../../symbols.js"></script><script type="application/javascript">var symbolSearchRootDir = "../../";
+$('#symbolSearchPane').show();</script>
+			</div>
+			<ul class="tree-view">
+				<li class="tree-view ">
+					<div class="package ">vibeirc
+					</div>
+			<ul class="tree-view">
+				<li>
+					<div class="module ">
+						<a href="../../vibeirc/client.html">client</a>
+					</div>
+				</li>
+				<li>
+					<div class="module selected">
+						<a href="../../vibeirc/constants.html">constants</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../../vibeirc/data.html">data</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../../vibeirc/utility.html">utility</a>
+					</div>
+				</li>
+			</ul>
+				</li>
+			</ul>
 		</nav>
 		<div id="main-contents">
-			<h1>Enum Color</h1>
-			<section>
-				<p>    <code class="prettyprint lang-d">Color</code> codes for use with <a href="../utility/color.html">color</a>.
+			<h1>Enum Color</h1><p>Color codes for use with <a href="../utility/color.html">color</a>.
 </p>
-
-					<p>The enum base type is
-						<code class="prettyprint lang-d"><code class="prettyprint lang-d">string</code></code>
-.
-					</p>
-					<section>
-						<h3>Enum members</h3>
-						<table>
-							<col class="caption"/>
-							<tr>
-								<th>Name</th>
-								<th>Description</th>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../vibeirc/constants/Color.black.html">
-										<code>black</code>
-									</a>
-								</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../vibeirc/constants/Color.blue.html">
-										<code>blue</code>
-									</a>
-								</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../vibeirc/constants/Color.brown.html">
-										<code>brown</code>
-									</a>
-								</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../vibeirc/constants/Color.green.html">
-										<code>green</code>
-									</a>
-								</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../vibeirc/constants/Color.grey.html">
-										<code>grey</code>
-									</a>
-								</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../vibeirc/constants/Color.lightblue.html">
-										<code>lightblue</code>
-									</a>
-								</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../vibeirc/constants/Color.lightcyan.html">
-										<code>lightcyan</code>
-									</a>
-								</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../vibeirc/constants/Color.lightgreen.html">
-										<code>lightgreen</code>
-									</a>
-								</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../vibeirc/constants/Color.lightgrey.html">
-										<code>lightgrey</code>
-									</a>
-								</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../vibeirc/constants/Color.none.html">
-										<code>none</code>
-									</a>
-								</td>
-								<td>Default color
+			<div class="prototype">
+				<code class="lang-d">
+					<div class="single-prototype">
+			<span class="kwd">enum</span> <span class="typ">Color</span>
+			 <span class="pun">:</span> <span class="typ">string</span> <span class="pun">{ ... }</span>
+					</div>
+				</code>
+			</div>
+			
+			<section><h2>Enum members</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Description</th>
+					</tr>
+					<tr>
+						<td id="black">
+							<code>black</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td id="blue">
+							<code>blue</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td id="brown">
+							<code>brown</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td id="green">
+							<code>green</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td id="grey">
+							<code>grey</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td id="lightblue">
+							<code>lightblue</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td id="lightcyan">
+							<code>lightcyan</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td id="lightgreen">
+							<code>lightgreen</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td id="lightgrey">
+							<code>lightgrey</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td id="none">
+							<code>none</code>
+						</td>
+						<td>Default color
 </td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../vibeirc/constants/Color.orange.html">
-										<code>orange</code>
-									</a>
-								</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../vibeirc/constants/Color.pink.html">
-										<code>pink</code>
-									</a>
-								</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../vibeirc/constants/Color.purple.html">
-										<code>purple</code>
-									</a>
-								</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../vibeirc/constants/Color.red.html">
-										<code>red</code>
-									</a>
-								</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../vibeirc/constants/Color.teal.html">
-										<code>teal</code>
-									</a>
-								</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../vibeirc/constants/Color.transparent.html">
-										<code>transparent</code>
-									</a>
-								</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../vibeirc/constants/Color.white.html">
-										<code>white</code>
-									</a>
-								</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>
-									<a href="../../vibeirc/constants/Color.yellow.html">
-										<code>yellow</code>
-									</a>
-								</td>
-								<td></td>
-							</tr>
-						</table>
-					</section>
-
+					</tr>
+					<tr>
+						<td id="orange">
+							<code>orange</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td id="pink">
+							<code>pink</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td id="purple">
+							<code>purple</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td id="red">
+							<code>red</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td id="teal">
+							<code>teal</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td id="transparent">
+							<code>transparent</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td id="white">
+							<code>white</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td id="yellow">
+							<code>yellow</code>
+						</td>
+						<td></td>
+					</tr>
+				</table>
 			</section>
-			<section>
-				<h2>Authors</h2>
-
-			</section>
-			<section>
-				<h2>Copyright</h2>
-
-			</section>
-			<section>
-				<h2>License</h2>
-
-			</section>
+			
+			<footer>
+				<table class="license-info">
+					<tr>
+						<th>Authors</th>
+						<td>
+							
+						</td>
+					</tr>
+					<tr>
+						<th>Copyright</th>
+						<td>
+							
+						</td>
+					</tr>
+					<tr>
+						<th>License</th>
+						<td>
+							
+						</td>
+					</tr>
+				</table>
+				<p class="faint">Generated using the DDOX documentation generator</p>
+			</footer>
 		</div>
 	</body>
 </html>

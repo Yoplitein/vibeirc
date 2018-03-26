@@ -5,64 +5,71 @@
 		<title>Function IRCClient.onUnknownNumeric</title>
 		<link rel="stylesheet" type="text/css" href="../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../prettify/prettify.css" type="text/css"/>
-		<script type="text/javascript" src="../../scripts/jquery.js">/**/</script>
-		<script type="text/javascript" src="../../prettify/prettify.js">/**/</script>
-		<script type="text/javascript" src="../../scripts/ddox.js">/**/</script>
+		<script type="text/javascript" src="../../scripts/jquery.js">/**/</script><script type="text/javascript" src="../../scripts/ddox.js">/**/</script>
 	</head>
-	<body onload="prettyPrint(); setupDdox();">
+	<body onload="setupDdox();">
 		<nav id="main-nav">
-						<ul class="tree-view">
-							<li class=" tree-view">
-								<a href="#" class="package">vibeirc</a>
-						<ul class="tree-view">
-							<li>
-								<a href="../../vibeirc/client.html" class="selected module">client</a>
-							</li>
-							<li>
-								<a href="../../vibeirc/constants.html" class=" module">constants</a>
-							</li>
-							<li>
-								<a href="../../vibeirc/data.html" class=" module">data</a>
-							</li>
-							<li>
-								<a href="../../vibeirc/utility.html" class=" module">utility</a>
-							</li>
-						</ul>
-							</li>
-						</ul>
-				<noscript>
-					<p style="color: red">The search functionality needs JavaScript enabled</p>
-				</noscript>
-				<div id="symbolSearchPane" style="display: none">
-					<p>
-						<input id="symbolSearch" type="text" placeholder="Search for symbols" onchange="performSymbolSearch(24);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"/>
-					</p>
-	<ul id="symbolSearchResults" style="display: none"></ul>
-	<script type="application/javascript" src="../../symbols.js"></script>
-	<script type="application/javascript">
-var symbolSearchRootDir = "../../";
-$('#symbolSearchPane').show();
-	</script>
-				</div>
+			<noscript>
+				<p style="color: red">The search functionality needs JavaScript enabled</p>
+			</noscript>
+			<div id="symbolSearchPane" style="display: none">
+				<form action="#" method="GET">
+					<input id="symbolSearch" type="text" name="q" placeholder="Search for symbols" autocomplete="off" onchange="performSymbolSearch(40);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"/>
+				</form>
+				<ul id="symbolSearchResults" class="symbolList" style="display: none"></ul><script type="application/javascript" src="../../symbols.js"></script><script type="application/javascript">var symbolSearchRootDir = "../../";
+$('#symbolSearchPane').show();</script>
+			</div>
+			<ul class="tree-view">
+				<li class="tree-view ">
+					<div class="package ">vibeirc
+					</div>
+			<ul class="tree-view">
+				<li>
+					<div class="module selected">
+						<a href="../../vibeirc/client.html">client</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../../vibeirc/constants.html">constants</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../../vibeirc/data.html">data</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../../vibeirc/utility.html">utility</a>
+					</div>
+				</li>
+			</ul>
+				</li>
+			</ul>
 		</nav>
 		<div id="main-contents">
-			<h1>Function IRCClient.onUnknownNumeric</h1>
-			<section>
-				<p>        Called when an unknown numeric command is received.
+			<h1>Function IRCClient.onUnknownNumeric</h1><p>Called when an unknown numeric command is received.
 </p>
-<section>
-</section>
+			<div class="prototype">
+				<code class="lang-d">
+					<div class="single-prototype">
+			<span class="typ">void</span> <span class="kwd">delegate</span><span class="pun">(</span><span class="typ">string</span><span class="pun">, </span><span class="typ">int</span><span class="pun">, </span><span class="typ">string</span><span class="pun">[]</span><span class="pun">)</span> <span class="pln">onUnknownNumeric
+			<span class="pun">()</span><span class="pln"> </span><span class="kwd">@property</span><span class="pun">;</span>
+			<br/>
+			<br/>
+			<span class="typ">void</span> <span class="kwd">delegate</span><span class="pun">(</span><span class="typ">string</span><span class="pun">, </span><span class="typ">int</span><span class="pun">, </span><span class="typ">string</span><span class="pun">[]</span><span class="pun">)</span> <span class="pln">onUnknownNumeric</span>
+			<span class="pun">(</span>
+			<br/>
+			&nbsp;&nbsp;<span class="typ">void</span> <span class="kwd">delegate</span><span class="pun">(</span><span class="typ">string</span><span class="pun">, </span><span class="typ">int</span><span class="pun">, </span><span class="typ">string</span><span class="pun">[]</span><span class="pun">)</span> <span class="pln">newValue</span>
+			<br/>
+			<span class="pun">)</span><span class="pln"> </span><span class="kwd">@property</span><span class="pun">;</span>
+					</div>
+				</code>
+			</div>
+			<section></section>
 
-					<section>
-						<h3>Prototypes</h3>
-						<pre class="code prettyprint lang-d prototype">
-void delegate(string, int, string[]) onUnknownNumeric() @property;
-
-void delegate(string, int, string[]) onUnknownNumeric(
-&nbsp;&nbsp;void delegate(string, int, string[]) newValue
-) @property;</pre>
-					</section>
-<section><h3>Parameters</h3>
+			<section><h2>Parameters</h2>
 <table><col class="caption"><tr><th>Name</th><th>Description</th></tr>
 <tr><td id="a">a</td><td> origin of the command, either a server or a user</td></tr>
 <tr><td id="b">b</td><td> the number of the command</td></tr>
@@ -70,19 +77,29 @@ void delegate(string, int, string[]) onUnknownNumeric(
 </table>
 </section>
 
-			</section>
-			<section>
-				<h2>Authors</h2>
-
-			</section>
-			<section>
-				<h2>Copyright</h2>
-
-			</section>
-			<section>
-				<h2>License</h2>
-
-			</section>
+			<footer>
+				<table class="license-info">
+					<tr>
+						<th>Authors</th>
+						<td>
+							
+						</td>
+					</tr>
+					<tr>
+						<th>Copyright</th>
+						<td>
+							
+						</td>
+					</tr>
+					<tr>
+						<th>License</th>
+						<td>
+							
+						</td>
+					</tr>
+				</table>
+				<p class="faint">Generated using the DDOX documentation generator</p>
+			</footer>
 		</div>
 	</body>
 </html>
